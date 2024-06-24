@@ -1,0 +1,11 @@
+src/
+node_module/
+public/
+tsup.config.ts
+tsconfig.node.json
+tsconfig.json
+index.html
+.gitignore
+.bun.lockb
+.npmignore
+README.md
