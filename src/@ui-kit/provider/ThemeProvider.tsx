@@ -15,7 +15,7 @@ const VenuxThemeProvider = ({
 
   return (
     <ThemeContext.Provider value={setTheme}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={_theme}>
         {children}
         <Global
           styles={{

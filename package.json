@@ -1,5 +1,5 @@
 {
-  "name": "@venux-ui/react",
+  "name": "@unix-ui/react",
   "version": "1.0.0-beta",
   "type": "module",
   "main": "./dist/index.js",

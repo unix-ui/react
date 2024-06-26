@@ -9,12 +9,10 @@ import {
 } from "./checkbox.styled";
 import { useTheme } from "../../hooks";
 import { _defaultCheckboxProps } from "./_default.ts";
-import { _defaultColors } from "../../provider/_default.ts";
-import { getColor } from "../../../utils/getColor.ts";
 
 const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>((_props, ref) => {
   const [theme] = useTheme();
-  const checkbox = theme?.theme?.[theme.currentTheme]?.Checkbox;
+
   const props = {
     ..._defaultCheckboxProps,
     ...safeObj(theme?.theme?.[theme.currentTheme]?.Checkbox?.defaultProps),
@@ -22,7 +20,6 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>((_props, ref) => {
   };
 
   const {
-    size,
     checkBoxProps,
     labelProps,
     label,
@@ -36,8 +33,6 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>((_props, ref) => {
     ...rest
   } = props;
 
-  const { style: checkBoxStyle, ...restCheckbox } = safeObj(checkBoxProps);
-
   const input_ref = useRef<HTMLInputElement>(null);
 
   return (
@@ -50,15 +45,12 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>((_props, ref) => {
       {...rest}
     >
       <CheckboxSpan_
+        variant={props.variant}
+        colorScheme={props.colorScheme}
+        checked={props.checked}
         size={props.size || 20}
-        style={{
-          background: props.checked
-            ? getColor(theme, props.colorScheme)?.main
-            : "#e1e2e4",
-          ...safeObj(props.checked && checkbox?.overrideStyles?.checked),
-          ...checkBoxStyle,
-        }}
-        {...restCheckbox}
+        noDefaultStyling={props.noDefaultStyling}
+        {...checkBoxProps}
       >
         {props.checked && (
           <CheckIcon
@@ -76,7 +68,15 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>((_props, ref) => {
         onChange={onChange}
         {...inputProps}
       />
-      {label && <CheckboxLabel_ {...labelProps}>{label}</CheckboxLabel_>}
+      {label && (
+        <CheckboxLabel_
+          variant={props.variant}
+          noDefaultStyling={props.noDefaultStyling}
+          {...labelProps}
+        >
+          {label}
+        </CheckboxLabel_>
+      )}
     </CheckboxButton_>
   );
 });
@@ -87,7 +87,7 @@ function CheckIcon(props: SVGProps<SVGSVGElement>) {
       <g
         stroke="none"
         fontSize={props.fontSize}
-        stroke-width="14"
+        strokeWidth="14"
         fill="none"
         fillRule="evenodd"
       >

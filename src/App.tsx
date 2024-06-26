@@ -4,9 +4,7 @@ import { VenuxThemeProvider } from "./@ui-kit/provider";
 import { Button } from "./@ui-kit/components";
 import { Transition } from "./@ui-kit/components/Transition/Transition";
 import { Select } from "./@ui-kit/components/Select/Select";
-import Datepicker from "./@ui-kit/components/Datepickers/Datepicker";
-import Popover from "./@ui-kit/components/Popover/Popover";
-import { Center } from "./@ui-kit/components/Layouts/Flexbox";
+import { Datepicker } from "./@ui-kit/components/Datepickers/Datepicker";
 
 function App() {
   const [checked, setChecked] = useState(false);
@@ -15,26 +13,7 @@ function App() {
       theme={{
         currentTheme: "light",
         theme: {
-          light: {
-            Button: {
-              defaultProps: { all: { ripple: true } },
-              overrideStyles: {
-                outlined: {},
-                var1: {
-                  removeDefaultStyling: true,
-                  button: {
-                    styles: {
-                      background: "red",
-                    },
-                  },
-                },
-              },
-              sizes: {
-                cs: { styles: { padding: "10px 20px" } },
-              },
-            },
-            Checkbox: {},
-          },
+          light: {},
         },
       }}
     >
@@ -61,14 +40,13 @@ function App() {
         options={[1, 2, 3]}
         inputRenderer={<input />}
       />
-      <Datepicker />
+      <Datepicker
+        onChange={(e) => {
+          console.log(e.format("YYYY-MM-DD"));
+        }}
+        colorScheme="red"
+      />
       <Button>asds</Button>
-
-      <Center sx={{ justifyContent: "center" }}>
-        <Popover>
-          <div style={{ background: "red", width: 300 }}>asdsa</div>
-        </Popover>
-      </Center>
     </VenuxThemeProvider>
   );
 }

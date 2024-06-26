@@ -29,13 +29,3 @@ export const SpaceBetween = styled.div<{
   (props) => safeCssObj(props.direction && { flexDirection: props.direction }),
   (props) => ({ gap: props.gap })
 );
-
-// const Center = () => {
-//   return (
-//     <div>
-
-//     </div>
-//   )
-// }
-
-// export default Center

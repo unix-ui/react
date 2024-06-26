@@ -4,7 +4,7 @@ import { SxProps } from "../../types/@types";
 import { _defaultColors } from "../../provider/_default";
 import {
   T_PRE_BUTTON_PROPS,
-  T_WITH_NO_STYLE,
+  T_WITH_NO_DEFAULT_STYLE,
   T_STRING_GENER,
   T_WITH_THEME,
 } from "../../../@types/@types";
@@ -12,7 +12,7 @@ import { unit } from "../../utils/units";
 import { alpha } from "../../utils/alpha";
 import { jsx } from "@emotion/react";
 
-type ButtonProps = T_WITH_NO_STYLE<
+type ButtonProps = T_WITH_NO_DEFAULT_STYLE<
   T_PRE_BUTTON_PROPS & {
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;

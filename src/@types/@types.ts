@@ -1,7 +1,7 @@
 import { _defaultColors } from "../@ui-kit/provider";
 import { SxProps, RipplesAttr, ThemeProps } from "../@ui-kit/types/@types";
 
-export type T_WITH_NO_STYLE<T> = T & {
+export type T_WITH_NO_DEFAULT_STYLE<T> = T & {
   noDefaultStyling?: boolean;
 };
 
@@ -31,4 +31,13 @@ export type T_WITH_RIPPLE<T> = T & {
   ripple?: boolean;
   isLoading?: boolean;
   rippleDuration?: number;
+};
+
+export type T_OVERRIDE_SX = {
+  removeDefaultStyling?: boolean;
+  styles?: SxProps;
+};
+
+export type T_VARIANTS_THEME<T extends string> = {
+  [K in T]?: T_OVERRIDE_SX;
 };

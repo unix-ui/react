@@ -1,74 +1,117 @@
-import React, {
-  createRef,
-  CSSProperties,
-  Fragment,
-  ReactElement,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback } from "react";
 import { TransitionProps } from "../Transition/@types";
 import { Transition } from "../Transition/Transition";
+import { get_transition_props } from "../../../utils/transition";
+import { debounce } from "../../utils";
 
-const Popover = (
-  props: TransitionProps & { children?: ReactElement<HTMLElement> }
-) => {
-  const ref = useRef<HTMLElement>(null);
+type VerticalPosition = "top" | "bottom";
+type HorizontalPosition = "left" | "right" | "center";
 
-  if (props.children?.type === Fragment) {
-    console.warn("Fragments are not supported in Popover component.");
-    return <></>;
-  }
-  const childWithRef = React.cloneElement(props.children as any, {
-    ref,
-  });
+export type PopoverProps = Omit<TransitionProps, "ref"> & {
+  spacing?: number;
+  elRef: React.MutableRefObject<HTMLDivElement>;
+  _ref?: (e: HTMLDivElement | null) => HTMLDivElement | null;
+  position?:
+    | `${VerticalPosition}-${HorizontalPosition}`
+    | `${HorizontalPosition}-${VerticalPosition}`
+    | "left-center"
+    | "right-center";
+};
 
-  return (
-    <>
-      {childWithRef}
-      <Transition
-        show
-        ref={(e) => {
-          function handleReverse() {
-            const _rec = ref?.current?.getBoundingClientRect();
-            const _rec_e = e?.getBoundingClientRect();
-            console.log(_rec, _rec_e);
+const Popover = ({ style, elRef, spacing, _ref, ...props }: PopoverProps) => {
+  const _handleResize = useCallback(
+    (e: HTMLDivElement | null) => {
+      const _rec = elRef?.current?.getBoundingClientRect();
+      const _rec_e = e?.getBoundingClientRect();
 
-            if (_rec && e && _rec_e) {
-              // if (_rec?.left <= 0) setLeft(0);
-              // if (_rec?.right >= window.innerWidth) setRight(0);
-              // setTop(_rec.bottom);
-              // setLeft(_rec.left / 2 + _rec.width);
-              console.log("object");
-              if (_rec_e.left <= 0) e.style.left = "0";
-              else if (_rec_e.right >= window.innerWidth) e.style.right = "0";
-              else
-                e.style.left = `${
-                  _rec.left + _rec.width / 2 - _rec_e.width / 2
-                }px`;
+      if (_rec && e && _rec_e && props.show) {
+        e.style.left = `${
+          props.position === "bottom-left" || props.position === "top-left"
+            ? _rec.left
+            : props.position === "bottom-right" ||
+              props.position === "top-right"
+            ? _rec.right - _rec_e.width
+            : _rec.left + _rec.width / 2 - _rec_e.width / 2
+        }px`;
 
-              const top = _rec.top - _rec_e.height;
-              e.style.top = `${top < 0 ? _rec.bottom : top}px`;
-            }
-            // setReverse(
-            //   window.innerHeight <
-            //     (optionsRef.current?.getBoundingClientRect().bottom || 0)
-            // );
+        if (
+          props?.position?.startsWith("left") ||
+          props?.position?.startsWith("right")
+        ) {
+          if (props.position?.endsWith("bottom"))
+            e.style.top = `${_rec.bottom}px`;
+          if (props.position?.endsWith("top")) e.style.top = `${_rec.top}px`;
+          if (props.position?.endsWith("center")) {
+            e.style.top = `${_rec.top + _rec.height / 2 - _rec_e.height / 2}px`;
           }
-          handleReverse();
-          window.addEventListener("scroll", () => handleReverse());
-          window.addEventListener("resize", () => handleReverse());
-        }}
-        sx={{
-          minWidth: 500,
-          height: 400,
-          position: "fixed",
-          background: "blue",
-        }}
-      >
-        asdasd
-      </Transition>
-    </>
+        }
+
+        if (props?.position?.startsWith("left")) {
+          const left = _rec.left - _rec_e.width;
+          e.style.left = `${
+            _rec_e.left <= 0 && !(_rec_e.right >= window.innerWidth)
+              ? _rec.right
+              : left
+          }px`;
+        }
+        //
+        else if (props?.position?.startsWith("right")) {
+          const right = _rec.left - _rec_e.width;
+          e.style.left = `${right <= 0 ? _rec.left + _rec.width : right}px`;
+        } else {
+          if (_rec_e.left <= 0 && !(_rec_e.right >= window.innerWidth))
+            e.style.left = "0";
+
+          if (_rec_e.right >= window.innerWidth && !(_rec_e.left <= 0))
+            e.style.right = "0";
+
+          if (props.position?.startsWith("top-")) {
+            const top = _rec.top - _rec_e.height;
+            e.style.top = `${
+              top < 0 && !(_rec_e.bottom >= window.innerHeight)
+                ? _rec.bottom
+                : top
+            }px`;
+          } else {
+            const top = _rec.top - _rec_e.height;
+            e.style.top = `${
+              _rec_e.bottom >= window.innerHeight && !(top < 0)
+                ? top
+                : _rec.bottom
+            }px`;
+          }
+        }
+      }
+    },
+    [elRef, props.position, props.show]
+  );
+
+  const handleResize = debounce(_handleResize, 100);
+  return (
+    <Transition
+      ref={(e) => {
+        _ref && (e = _ref(e));
+        _handleResize(e);
+        window.addEventListener("scroll", () => handleResize(e));
+        window.addEventListener("resize", () => handleResize(e));
+      }}
+      style={{ position: "fixed", zIndex: 9999, ...style }}
+      {...get_transition_props(
+        {
+          enteringStyle: {
+            opacity: 0,
+          },
+          activeStyle: {
+            opacity: 1,
+          },
+          exitingStyle: {
+            opacity: 0,
+          },
+        },
+        props
+      )}
+      {...props}
+    />
   );
 };
 

@@ -1,6 +1,11 @@
 import { CSSObject } from "@emotion/react";
 import { ComponentProps } from "react";
 import { Button_ } from "../components/Button/button.styled";
+import { T_OVERRIDE_SX, T_VARIANTS_THEME } from "../../@types/@types";
+import { ButtonTheme } from "./@button";
+import { ButtonProps } from "../components";
+import { CheckboxProps } from "../components/Checkbox/@types";
+import { ColorShades } from "./@colors";
 
 export type SxProps = CSSObject;
 
@@ -12,47 +17,28 @@ export type Colors = Partial<
   ColorsGen<"primary" | "red" | "green" | "orange" | "blue">
 > & { [props: string & {}]: Partial<ColorShades> };
 
-type T_OVERRIDE_SX = {
-  removeDefaultStyling?: boolean;
-  styles?: SxProps;
-};
-type T_OVERRIDE_STYLE = {
-  removeDefaultStyling?: boolean;
-  styles?: React.CSSProperties;
-};
-
-type T_OVERRIDE_STYLE_CHECKBOX<T extends string> = {
-  [K in T]?: {
-    icon?: T_OVERRIDE_SX;
-    checkbox?: T_OVERRIDE_SX;
-    label?: T_OVERRIDE_SX;
+type CheckboxOverrideStyles = {
+  checkbox?: {
+    checked?: T_OVERRIDE_SX;
+    unchecked?: T_OVERRIDE_SX;
   };
-};
-
-type ButtonOverrideStyles = {
   removeDefaultStyling?: boolean;
-  disabled?: T_OVERRIDE_SX;
-  loading?: T_OVERRIDE_SX;
-  button?: T_OVERRIDE_SX;
-  loadingRenderer?: (colorScheme: string) => JSX.Element;
-};
-type CheckboxOverrideStyles = T_OVERRIDE_STYLE_CHECKBOX<
-  "unchecked" | "disabled"
-> & {
-  removeDefaultStyling?: boolean;
-  checked: T_OVERRIDE_STYLE;
+  label?: T_OVERRIDE_SX;
+  styles?: T_OVERRIDE_SX;
 };
 
-type ButtonOverrideStylesOptions<T extends string> = {
-  [K in T]?: ButtonOverrideStyles | undefined;
+type CheckboxDefaultProps<T extends string> = {
+  [K in T]?: CheckboxProps;
 };
 
-type ButtonSizes<T extends string> = {
-  [K in T]?: { styles?: SxProps; removeDefaultStyling?: boolean } | undefined;
-};
-
-type ButtonDefaultProps<T extends string> = {
-  [K in T]?: ComponentProps<typeof Button_>;
+type CheckboxSizes<T extends string> = {
+  [K in T]?: {
+    checkbox: {
+      checked: T_OVERRIDE_SX;
+      unchecked: T_OVERRIDE_SX;
+    };
+    icon?: T_OVERRIDE_SX;
+  };
 };
 
 export type ThemeProps = {
@@ -62,30 +48,25 @@ export type ThemeProps = {
     [props: string]: {
       colors?: Colors;
 
-      Button?: {
-        defaultProps?: ButtonDefaultProps<
-          "all" | "default" | "outlined" | "ghost"
-        > & {
-          [props: string]: Partial<ComponentProps<typeof Button_>> | undefined;
-        };
-        overrideStyles?: ButtonOverrideStylesOptions<
-          "default" | "outlined" | "ghost"
-        > & {
-          [props: string]: ButtonOverrideStyles | undefined;
-        };
-        sizes?: ButtonSizes<"xs" | "sm" | "md" | "lg" | "xl"> & {
-          [props: string]: { styles?: SxProps } | undefined;
-        };
-      };
+      Button?: ButtonTheme;
       Checkbox?: {
-        defaultProps?: ButtonDefaultProps<
-          "all" | "default" | "outlined" | "ghost"
-        > & {
-          [props: string]: Partial<ComponentProps<typeof Button_>> | undefined;
+        defaultProps?: CheckboxDefaultProps<"all" | "default"> & {
+          [props: string]: CheckboxProps | undefined;
         };
-        overrideStyles?: CheckboxOverrideStyles;
-        sizes?: ButtonSizes<"xs" | "sm" | "md" | "lg" | "xl"> & {
-          [props: string]: { styles?: SxProps } | undefined;
+        overrideStyles?: {
+          default?: CheckboxOverrideStyles;
+          [props: string]: CheckboxOverrideStyles | undefined;
+        };
+        sizes?: CheckboxSizes<"xs" | "sm" | "md" | "lg" | "xl"> & {
+          [props: string]:
+            | {
+                checkbox: {
+                  checked: T_OVERRIDE_SX;
+                  unchecked: T_OVERRIDE_SX;
+                };
+                icon?: T_OVERRIDE_SX;
+              }
+            | undefined;
         };
       };
       globalStyles?: SxProps;
@@ -98,18 +79,4 @@ export type RipplesAttr = {
   left: number;
   width: number;
   height: number;
-};
-
-export type ColorShades = {
-  main: string;
-  100: string;
-  200: string;
-  300: string;
-  400: string;
-  500: string;
-  600: string;
-  700: string;
-  800: string;
-  900: string;
-  hover: string;
 };

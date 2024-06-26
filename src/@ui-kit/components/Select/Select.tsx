@@ -14,6 +14,7 @@ import { get_transition_props } from "../../../utils/transition";
 import { Select_, SelectItem_ } from "./select.styled";
 import { unit } from "../../utils/units";
 import { _defaultSelectProps } from "./_default";
+import Popover from "../Popover/Popover";
 
 function modifiedItemRenderer(
   itemRenderer: Exclude<SelectProps["itemRenderer"], undefined>,
@@ -53,38 +54,17 @@ const SelectComp = <T extends unknown[]>(
     ...rest
   } = props;
 
-  const { sx, ...restTransition } = safeObj(transitionProps);
+  const { sx: transitionSx, ...restTransition } = safeObj(transitionProps);
 
   const ref = useClickAway<HTMLDivElement>(() => setShow(false));
 
   useImperativeHandle(_ref, () => ref.current);
 
-  const [reverse, setReverse] = useState(false);
-
   const [show, setShow] = useState(false);
-  useEffect(() => {
-    // function handleReverse() {
-    //   setReverse(
-    //     window.innerHeight <
-    //       (optionsRef.current?.getBoundingClientRect().bottom || 0)
-    //   );
-    // }
-    // handleReverse();
-    // console.log(optionsRef);
-    if (show) {
-      // window.addEventListener("scroll", () => handleReverse());
-      // window.addEventListener("resize", () => handleReverse());
-    }
-
-    return () => {
-      // window.removeEventListener("scroll", handleReverse);
-      // window.removeEventListener("resize", handleReverse);
-    };
-  }, [ref, show]);
 
   function handleChange(item: (typeof options)[0], i: number) {
     onChange && onChange(item, i);
-    props.disableHideOnChange && setShow(false);
+    !props.disableHideOnChange && setShow(false);
   }
 
   return (
@@ -97,43 +77,43 @@ const SelectComp = <T extends unknown[]>(
       {...rest}
     >
       {inputRenderer}
-      <Transition
+      <Popover
+        elRef={ref}
         show={show}
-        ref={(el) => {
+        position="bottom-center"
+        _ref={(el) => {
           const activeItem =
             el?.querySelector<HTMLDivElement>("[data-active=true]");
 
           activeItem && el?.scrollTo({ top: activeItem?.offsetTop });
+          return el;
         }}
         sx={{
           maxHeight: window.innerHeight / 2,
           display: "flex",
           flexDirection: "column",
           gap: unit.rem(0.5),
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "100%",
+          width: "auto",
           zIndex: "9999",
           background: "#fff",
           padding: unit.spacing(0.5),
           overflow: "auto",
-          ...sx,
+          ...transitionSx,
         }}
         {...restTransition}
         {...get_transition_props(
           {
             enteringStyle: {
               opacity: 0,
-              transform: "translateX(-50%) translateY(12px)",
+              transform: "translateY(12px)",
             },
             activeStyle: {
               opacity: 1,
-              transform: "translateX(-50%) translateY(0)",
+              transform: "translateY(0)",
             },
             exitingStyle: {
               opacity: 0,
-              transform: "translateX(-50%) translateY(12px)",
+              transform: "translateY(12px)",
             },
           },
           transitionProps
@@ -163,7 +143,7 @@ const SelectComp = <T extends unknown[]>(
             </Fragment>
           );
         })}
-      </Transition>
+      </Popover>
     </Select_>
   );
 };

@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import { safeCssObj, safeCssObjOn } from "../../../utils/safeObj";
 import { alpha } from "../../utils/alpha";
 import { unit } from "../../utils/units";
-import { getColor } from "../../../utils/getColor";
+import { getColor } from "../../../utils/get";
 import {
-  T_WITH_NO_STYLE,
+  T_WITH_NO_DEFAULT_STYLE,
   T_WITH_SCHEME,
   T_WITH_THEME,
 } from "../../../@types/@types";
@@ -46,10 +46,13 @@ type SelectProps = {
   transitionProps?: TransitionProps;
 };
 
-export const Select_ = styled.div<T_WITH_THEME<T_WITH_SCHEME<SelectProps>>>({
-  width: "fit-content",
-  position: "relative",
-});
+export const Select_ = styled.div<T_WITH_THEME<T_WITH_SCHEME<SelectProps>>>(
+  {
+    width: "fit-content",
+    position: "relative",
+  },
+  (props) => safeCssObj(props.sx)
+);
 
 export const SelectItem_ = styled.button<T_WITH_THEME<T_WITH_SCHEME<{}>>>(
   ({ theme, ...props }) => ({
