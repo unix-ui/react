@@ -1,25 +1,15 @@
 import { useState } from "react";
-import styled from "@emotion/styled";
-import { Button } from "./@ui-kit/components";
+import Checkbox from "./@ui-kit/components/Checkbox/Checkbox";
 import { VenuxThemeProvider } from "./@ui-kit/provider";
+import { Button } from "./@ui-kit/components";
+import { Transition } from "./@ui-kit/components/Transition/Transition";
+import { Select } from "./@ui-kit/components/Select/Select";
+import Datepicker from "./@ui-kit/components/Datepickers/Datepicker";
+import Popover from "./@ui-kit/components/Popover/Popover";
 import { Center } from "./@ui-kit/components/Layouts/Flexbox";
-import { keyframes } from "@emotion/react";
 
-const rippleKeyframes = keyframes({
-  "0%": { scale: "0", opacity: "0.2" },
-  "40%": { scale: "3", opacity: "0.2" },
-  "100%": { scale: "3", opacity: "0" },
-});
-
-const RippleSpan_ = styled.span({
-  display: "inline-block",
-  position: "absolute",
-  borderRadius: "9999px",
-  pointerEvents: "none",
-  animation: rippleKeyframes + " 0.8s 1 linear forwards",
-  background: "red",
-});
 function App() {
+  const [checked, setChecked] = useState(false);
   return (
     <VenuxThemeProvider
       theme={{
@@ -27,11 +17,9 @@ function App() {
         theme: {
           light: {
             Button: {
-              defaultProps: {
-                outlined: {},
-              },
+              defaultProps: { all: { ripple: true } },
               overrideStyles: {
-                default: {},
+                outlined: {},
                 var1: {
                   removeDefaultStyling: true,
                   button: {
@@ -45,29 +33,41 @@ function App() {
                 cs: { styles: { padding: "10px 20px" } },
               },
             },
+            Checkbox: {},
           },
         },
       }}
     >
-      <Button ripple size="xs">
-        asd
-      </Button>
-      <Button ripple size="sm">
-        asd
-      </Button>
-      <Button ripple size="md">
-        asd
-      </Button>
-      <Center sx={{ height: 200 }} gap={20}>
-        <Button ripple variant="ghost" size="md">
-          Button
-        </Button>
-        <Button colorScheme="blue" variant="var1" size="sm">
-          Button
-        </Button>
-        <Button ripple colorScheme="blue" variant="outlined">
-          Button
-        </Button>
+      <Checkbox
+        colorScheme="red"
+        checked={checked}
+        onChange={() => setChecked((p) => !p)}
+        label="Checkbox"
+        size={40}
+        iconSize={40}
+      />
+      <Transition
+        show={checked}
+        enteringStyle={{ opacity: 0, duration: 150 }}
+        exitingStyle={{ opacity: 0, duration: 400 }}
+        activeStyle={{ opacity: 1 }}
+      >
+        asdasdas
+      </Transition>
+
+      <Select
+        value={1}
+        colorScheme="red"
+        options={[1, 2, 3]}
+        inputRenderer={<input />}
+      />
+      <Datepicker />
+      <Button>asds</Button>
+
+      <Center sx={{ justifyContent: "center" }}>
+        <Popover>
+          <div style={{ background: "red", width: 300 }}>asdsa</div>
+        </Popover>
       </Center>
     </VenuxThemeProvider>
   );

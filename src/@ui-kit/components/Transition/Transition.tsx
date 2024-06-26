@@ -1,56 +1,22 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { TransitionProps } from "./@types";
-import { TransitionWrapper_ } from "./transition.styled";
+import { Transition_ } from "./transition.styled";
 
 const Transition = forwardRef<HTMLDivElement, TransitionProps>((props, ref) => {
-  const {
-    exitingStyle,
-    show,
-    enteringStyle,
-    activeStyle,
-    className,
-    sx,
-    ...rest
-  } = props;
-  const [hasTransitionedIn, setHasTransitionedIn] = useState(false);
-  const [style, setStyle] = useState(enteringStyle);
-  const DURATION = style?.duration || 150;
-
+  const [transition, setTransition] = useState(props.show);
   const timeoutRef = useRef<number>();
   useEffect(() => {
-    if (show && !hasTransitionedIn) {
-      setHasTransitionedIn(true);
-      setStyle(activeStyle);
-    } else if (!show && hasTransitionedIn) {
-      setStyle(exitingStyle);
+    if (!props.show) {
       timeoutRef.current = setTimeout(() => {
-        setHasTransitionedIn(false);
-        setStyle(enteringStyle);
-      }, DURATION);
-    }
+        setTransition(false);
+      }, props.exitingStyle?.duration || 150);
+    } else setTransition(props.show);
     return () => {
       clearTimeout(timeoutRef.current);
     };
-  }, [
-    DURATION,
-    activeStyle,
-    enteringStyle,
-    exitingStyle,
-    hasTransitionedIn,
-    show,
-  ]);
+  }, [props.exitingStyle?.duration, props.show]);
 
-  return hasTransitionedIn || show ? (
-    <TransitionWrapper_
-      ref={ref}
-      style={{
-        transition: `all ${DURATION}ms ${style?.transitionType || "linear"}`,
-      }}
-      {...rest}
-    />
-  ) : (
-    <></>
-  );
+  return transition ? <Transition_ ref={ref} {...props} /> : <></>;
 });
 
 export { Transition };

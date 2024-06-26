@@ -1,11 +1,11 @@
-import { createUseStyles } from "react-jss";
+import { T_WITH_RIPPLE } from "../../../@types/@types";
 import { safeCssObj } from "../../../utils/safeObj";
-import { RippleBaseProps } from "./@types";
+import styled from "@emotion/styled";
 
-export const useRippleBaseStyled = createUseStyles<"ripple", RippleBaseProps>({
-  ripple: (p) => ({
+export const RippleBase_ = styled.button<T_WITH_RIPPLE<{}>>(
+  {
     overflow: "hidden",
     position: "relative",
-    ...safeCssObj(p.sx),
-  }),
-});
+  },
+  (p) => safeCssObj(p.sx)
+);

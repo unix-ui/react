@@ -8,23 +8,25 @@ import { LoadingIcon } from "../LoadingIcon/LoadingIcon";
 import { useRipple } from "../../hooks/useRipple";
 import { safeObj } from "../../../utils/safeObj";
 import { useTheme } from "../../hooks";
-import { ButtonWrapper_, LoadingWrapper_ } from "./button.styled";
+import { Button_, LoadingWrapper_ } from "./button.styled";
 import { _defaultButtonProps } from "./_default";
 import { _defaultColors } from "../../provider/_default";
+import { ButtonProps } from "./@types";
 
-const Button = forwardRef<
-  HTMLButtonElement,
-  ComponentProps<typeof ButtonWrapper_>
->((_props, _ref) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((_props, _ref) => {
   const [theme] = useTheme();
+  const button = theme?.theme?.[theme.currentTheme]?.Button;
   const props = {
     ..._defaultButtonProps,
-    ...safeObj(theme?.theme?.[theme.currentTheme]?.Button?.defaultProps?.all),
+    ...safeObj(button?.defaultProps?.all),
     ...safeObj(
-      theme?.theme?.[theme.currentTheme]?.Button?.defaultProps?.[
-        _props.variant || _defaultButtonProps.variant
-      ]
+      button?.defaultProps?.[_props.variant || _defaultButtonProps.variant]
     ),
+    ...safeObj({
+      loadingRenderer:
+        button?.overrideStyles?.[_props.variant || _defaultButtonProps.variant]
+          ?.loadingRenderer,
+    }),
     ...safeObj(_props),
   } as typeof _props;
 
@@ -59,7 +61,7 @@ const Button = forwardRef<
   };
 
   return (
-    <ButtonWrapper_ ref={ref} onClick={handleClick} {...rest}>
+    <Button_ ref={ref} onClick={handleClick} isLoading={isLoading} {...rest}>
       {startIcon}
 
       {children}
@@ -67,13 +69,23 @@ const Button = forwardRef<
       {endIcon}
 
       {isLoading && (
-        <LoadingWrapper_ variant={props.variant} loadingSx={props.loadingSx}>
-          <LoadingIcon fontSize={20} />
-        </LoadingWrapper_>
+        <>
+          {props.loadingRenderer ? (
+            props.loadingRenderer(props.colorScheme!)
+          ) : (
+            <LoadingWrapper_
+              colorScheme={props.colorScheme}
+              variant={props.variant}
+              loadingSx={props.loadingSx}
+            >
+              <LoadingIcon fontSize={20} />
+            </LoadingWrapper_>
+          )}
+        </>
       )}
 
       {ripple && !isLoading && ripples}
-    </ButtonWrapper_>
+    </Button_>
   );
 });
 

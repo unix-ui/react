@@ -1,19 +1,9 @@
-import {
-  ButtonHTMLAttributes,
-  HTMLAttributes,
-  InputHTMLAttributes,
-} from "react";
+import { ComponentProps } from "react";
+import { CheckboxButton_ } from "./checkbox.styled";
+import { T_WITH_NO_THEME } from "../../../@types/@types";
 
-export type CheckboxProps = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  "onChange"
-> & {
-  size?: number;
-  labelProps?: Omit<HTMLAttributes<HTMLSpanElement>, "children">;
-  inputProps?: Omit<InputHTMLAttributes<HTMLInputElement>, "children">;
-  checkBoxProps?: HTMLAttributes<HTMLSpanElement>;
-  label?: string;
-  iconSize?: number;
-  checked?: boolean;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-};
+export type CheckboxProps = T_WITH_NO_THEME<
+  Omit<ComponentProps<typeof CheckboxButton_>, "onChange"> & {
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  }
+>;

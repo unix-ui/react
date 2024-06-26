@@ -1,4 +1,7 @@
 import { ComponentProps } from "react";
-import { ButtonWrapper_ } from "./button.styled";
+import { Button_ } from "./button.styled";
+import { T_WITH_NO_THEME, T_WITH_RIPPLE } from "../../../@types/@types";
 
-export type ButtonProps = ComponentProps<typeof ButtonWrapper_>;
+export type ButtonProps = T_WITH_NO_THEME<
+  T_WITH_RIPPLE<ComponentProps<typeof Button_>>
+>;

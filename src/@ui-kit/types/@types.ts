@@ -1,6 +1,6 @@
 import { CSSObject } from "@emotion/react";
 import { ComponentProps } from "react";
-import { ButtonWrapper_ } from "../components/Button/button.styled";
+import { Button_ } from "../components/Button/button.styled";
 
 export type SxProps = CSSObject;
 
@@ -12,16 +12,35 @@ export type Colors = Partial<
   ColorsGen<"primary" | "red" | "green" | "orange" | "blue">
 > & { [props: string & {}]: Partial<ColorShades> };
 
-type T_OVERRIDE_STYLE = {
+type T_OVERRIDE_SX = {
   removeDefaultStyling?: boolean;
   styles?: SxProps;
+};
+type T_OVERRIDE_STYLE = {
+  removeDefaultStyling?: boolean;
+  styles?: React.CSSProperties;
+};
+
+type T_OVERRIDE_STYLE_CHECKBOX<T extends string> = {
+  [K in T]?: {
+    icon?: T_OVERRIDE_SX;
+    checkbox?: T_OVERRIDE_SX;
+    label?: T_OVERRIDE_SX;
+  };
 };
 
 type ButtonOverrideStyles = {
   removeDefaultStyling?: boolean;
-  disabled?: T_OVERRIDE_STYLE;
-  loading?: T_OVERRIDE_STYLE;
-  button?: T_OVERRIDE_STYLE;
+  disabled?: T_OVERRIDE_SX;
+  loading?: T_OVERRIDE_SX;
+  button?: T_OVERRIDE_SX;
+  loadingRenderer?: (colorScheme: string) => JSX.Element;
+};
+type CheckboxOverrideStyles = T_OVERRIDE_STYLE_CHECKBOX<
+  "unchecked" | "disabled"
+> & {
+  removeDefaultStyling?: boolean;
+  checked: T_OVERRIDE_STYLE;
 };
 
 type ButtonOverrideStylesOptions<T extends string> = {
@@ -33,7 +52,7 @@ type ButtonSizes<T extends string> = {
 };
 
 type ButtonDefaultProps<T extends string> = {
-  [K in T]?: ComponentProps<typeof ButtonWrapper_>;
+  [K in T]?: ComponentProps<typeof Button_>;
 };
 
 export type ThemeProps = {
@@ -47,15 +66,24 @@ export type ThemeProps = {
         defaultProps?: ButtonDefaultProps<
           "all" | "default" | "outlined" | "ghost"
         > & {
-          [props: string]:
-            | Partial<ComponentProps<typeof ButtonWrapper_>>
-            | undefined;
+          [props: string]: Partial<ComponentProps<typeof Button_>> | undefined;
         };
         overrideStyles?: ButtonOverrideStylesOptions<
           "default" | "outlined" | "ghost"
         > & {
           [props: string]: ButtonOverrideStyles | undefined;
         };
+        sizes?: ButtonSizes<"xs" | "sm" | "md" | "lg" | "xl"> & {
+          [props: string]: { styles?: SxProps } | undefined;
+        };
+      };
+      Checkbox?: {
+        defaultProps?: ButtonDefaultProps<
+          "all" | "default" | "outlined" | "ghost"
+        > & {
+          [props: string]: Partial<ComponentProps<typeof Button_>> | undefined;
+        };
+        overrideStyles?: CheckboxOverrideStyles;
         sizes?: ButtonSizes<"xs" | "sm" | "md" | "lg" | "xl"> & {
           [props: string]: { styles?: SxProps } | undefined;
         };
@@ -84,5 +112,4 @@ export type ColorShades = {
   800: string;
   900: string;
   hover: string;
-  active: string;
 };

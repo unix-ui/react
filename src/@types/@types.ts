@@ -1,12 +1,13 @@
+import { _defaultColors } from "../@ui-kit/provider";
 import { SxProps, RipplesAttr, ThemeProps } from "../@ui-kit/types/@types";
 
-export type T_DEFINED_STYLED = {
+export type T_WITH_NO_STYLE<T> = T & {
   noDefaultStyling?: boolean;
 };
 
 export type T_STRING_GENER<T> = T | (string & {});
 
-export type T_DEFAULT_BUTTON_PROPS = T_ACTION_PROPS & {
+export type T_PRE_BUTTON_PROPS = T_ACTION_PROPS & {
   ripple?: boolean;
   isLoading?: boolean;
   rippleColor?: string;
@@ -18,4 +19,16 @@ export type T_ACTION_PROPS = {
   disabledSx?: SxProps;
 };
 
-export type T_STYLED_THEME<T> = T & { theme?: ThemeProps };
+export type T_WITH_THEME<T> = T & { theme?: ThemeProps };
+export type T_WITH_NO_THEME<T> = Omit<T, "theme">;
+export type T_WITH_SCHEME<T> = T & {
+  colorScheme?: keyof typeof _defaultColors;
+};
+export type T_WITH_RIPPLE<T> = T & {
+  disableRipple?: boolean;
+  rippleColor?: string;
+  rippleRenderer?: (props: Partial<RipplesAttr>) => JSX.Element;
+  ripple?: boolean;
+  isLoading?: boolean;
+  rippleDuration?: number;
+};

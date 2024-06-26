@@ -1,9 +1,5 @@
-import { ButtonHTMLAttributes } from "react";
-import { RipplesAttr, SxProps } from "../../types";
+import { ComponentProps } from "react";
+import { T_WITH_RIPPLE } from "../../../@types/@types";
+import { RippleBase_ } from "./ripple-base.styled";
 
-export type RippleBaseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  disableRipple?: boolean;
-  rippleColor?: string;
-  rippleRenderer?: (props: RipplesAttr) => JSX.Element;
-  sx?: SxProps;
-};
+export type RippleBaseProps = T_WITH_RIPPLE<ComponentProps<typeof RippleBase_>>;

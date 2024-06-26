@@ -12,8 +12,7 @@ export const _defaultColors: Colors = {
     "300": "#c9c6fb",
     "200": "#dbd9fc",
     "100": "#edecfe",
-    active: "#433ada",
-    hover: "#5c53f3",
+    hover: "#433ada",
   },
   red: {
     main: "#e72929",
@@ -26,8 +25,7 @@ export const _defaultColors: Colors = {
     "300": "#f8bfbf",
     "200": "#fad4d4",
     "100": "#fdeaea",
-    active: "#d02525",
-    hover: "#e93e3e",
+    hover: "#d02525",
   },
   orange: {
     main: "#ff8f00",
@@ -40,8 +38,7 @@ export const _defaultColors: Colors = {
     "300": "#ffddb3",
     "200": "#ffe9cc",
     "100": "#fff4e6",
-    active: "#e68100",
-    hover: "#ff9a1a",
+    hover: "#e68100",
   },
   green: {
     main: "#379777",
@@ -54,8 +51,7 @@ export const _defaultColors: Colors = {
     "300": "#c3e0d6",
     "200": "#d7eae4",
     "100": "#ebf5f1",
-    active: "#32886b",
-    hover: "#4ba185",
+    hover: "#32886b",
   },
   blue: {
     main: "#5AB2FF",
@@ -68,7 +64,6 @@ export const _defaultColors: Colors = {
     "300": "#cee8ff",
     "200": "#def0ff",
     "100": "#eff7ff",
-    active: "#51a0e6",
-    hover: "#6bbaff",
+    hover: "#51a0e6",
   },
 };

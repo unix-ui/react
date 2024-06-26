@@ -3,8 +3,14 @@ import moment, { Moment } from "moment";
 import RippleBase from "../RippleBase/RippleBase";
 import { cn } from "../../../utils/cn";
 import { Select } from "../Select/Select";
-import { useDateButtonStyled, useDatepickerStyled } from "./datepicker.styled";
+import {
+  Calendar_,
+  DatePicker_,
+  DatePickerButtons_,
+} from "./datepicker.styled";
 import { RippleBaseProps } from "../RippleBase/@types";
+import { SxProps } from "../../types";
+import { safeCssObj } from "../../../utils/safeObj";
 
 export type DatepickerProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -14,9 +20,33 @@ export type DatepickerProps = Omit<
   onChange?: (e: Moment) => void;
 };
 
+const _navButtonSx: SxProps = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "0.375rem",
+  cursor: "pointer",
+  userSelect: "none",
+  color: "12px",
+  width: "24px",
+  height: "24px",
+  ":hover": { backgroundColor: "#9CA3AF" },
+};
+
+const _dateButtonSx: SxProps = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "0.375rem",
+  cursor: "pointer",
+  userSelect: "none",
+  color: "12px",
+  width: "24px",
+  height: "24px",
+};
+
 const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
   const { value, onChange, ...rest } = props;
-  const styled = useDatepickerStyled();
   const [date, setDate] = useState(value ? moment(value) : moment());
   const [daysInMonth, setDaysInMonth] = useState<number[]>([]);
   const [daysInPrevMonth, setDaysInPrevMonth] = useState<number[]>([]);
@@ -33,7 +63,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
       { length: currentMonth.day() },
       (_, i) => prevMonth.daysInMonth() - (currentMonth.day() - i - 1)
     );
-    // 42 is the total length of date in 1 slide of datepicker
+
     const daysInNextMonthArray = Array.from(
       { length: 42 - (daysInCurrentMonth.length + daysInPreviousMonth.length) },
       (_, i) => i + 1
@@ -65,8 +95,8 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
   ];
 
   return (
-    <div className={styled.wrapper} ref={ref} {...rest}>
-      <div className={styled.button_wrapper}>
+    <DatePicker_ ref={ref} {...rest}>
+      <DatePickerButtons_>
         <Select
           value={months[date.get("month")]}
           inputRenderer={
@@ -90,6 +120,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
           transitionProps={{ sx: { minWidth: 150, marginTop: 6 } }}
         />
         <Select
+          disableHideOnChange
           value={date.get("year")}
           inputRenderer={
             <RippleBase
@@ -114,7 +145,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
 
         <RippleBase
           rippleColor="#4b5563"
-          className={cn(styled.ripple_button)}
+          sx={_navButtonSx}
           onClick={() => {
             setDate((p) => p.clone().subtract({ month: 1 }));
           }}
@@ -137,7 +168,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
         </RippleBase>
         <RippleBase
           rippleColor="#4b5563"
-          className={cn(styled.ripple_button)}
+          sx={_navButtonSx}
           onClick={() => setDate((p) => p.clone().add({ month: 1 }))}
         >
           <svg
@@ -156,9 +187,9 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
             ></path>
           </svg>
         </RippleBase>
-      </div>
+      </DatePickerButtons_>
 
-      <div className={styled.calendar}>
+      <Calendar_>
         {days.map((value, i) => {
           return (
             <p key={"days-" + i} className="text-[12px] text-gray-500">
@@ -168,7 +199,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
         })}
 
         {daysInPrevMonth.map((_date, i) => (
-          <DateButton
+          <RippleBase
             disableRipple
             onClick={() => {
               handleClick(
@@ -176,62 +207,68 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>((props, ref) => {
               );
               setDate((p) => p.clone().subtract({ month: 1 }));
             }}
+            sx={_dateButtonSx}
             key={`prev-${i}`}
           >
             {_date}
-          </DateButton>
+          </RippleBase>
         ))}
 
         {daysInMonth.map((_date, i) => (
-          <DateButton
+          <RippleBase
             key={`curr-${i}`}
+            rippleColor="#3D32EF"
             onClick={() => handleClick(date.clone().set({ date: _date }))}
-            isCurrentMonth
-            className={cn(
-              moment().isSame(date.clone().set({ date: _date }), "date") &&
-                "ring-1 ring-indigo-600 text-indigo-600 font-semibold"
-            )}
+            sx={{
+              ..._dateButtonSx,
+              ...safeCssObj(
+                moment().isSame(date.clone().set({ date: _date }), "date") && {
+                  boxShadow: "0 0 0 2px red",
+                }
+              ),
+            }}
           >
             {_date}
-          </DateButton>
+          </RippleBase>
         ))}
 
         {daysInNextMonth.map((_date, i) => (
-          <DateButton
+          <RippleBase
             disableRipple
             onClick={() => {
               handleClick(date.clone().add({ month: 1 }).set({ date: _date }));
               setDate((p) => p.clone().add({ month: 1 }));
             }}
             key={`next-${i}`}
+            sx={_dateButtonSx}
           >
             {_date}
-          </DateButton>
+          </RippleBase>
         ))}
-      </div>
-    </div>
+      </Calendar_>
+    </DatePicker_>
   );
 });
 
-function DateButton({
-  isCurrentMonth,
-  onClick,
-  className,
-  ...props
-}: RippleBaseProps & {
-  isCurrentMonth?: boolean;
-  isToday?: boolean;
-  onClick: () => void;
-}) {
-  const styled = useDateButtonStyled({ isCurrentMonth });
-  return (
-    <RippleBase
-      onClick={onClick}
-      rippleColor="#3D32EF"
-      className={cn(styled.ripple_button, className)}
-      {...props}
-    />
-  );
-}
+// function DateButton({
+//   isCurrentMonth,
+//   onClick,
+//   className,
+//   ...props
+// }: RippleBaseProps & {
+//   isCurrentMonth?: boolean;
+//   isToday?: boolean;
+//   onClick: () => void;
+// }) {
+//   const styled = useDateButtonStyled({ isCurrentMonth });
+//   return (
+//     <RippleBase
+//       onClick={onClick}
+//       rippleColor="#3D32EF"
+//       className={cn(styled.ripple_button, className)}
+//       {...props}
+//     />
+//   );
+// }
 
 export default Datepicker;

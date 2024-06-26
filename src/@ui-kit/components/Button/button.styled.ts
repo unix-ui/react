@@ -3,25 +3,27 @@ import { safeCssObj, safeCssObjOn } from "../../../utils/safeObj";
 import { SxProps } from "../../types/@types";
 import { _defaultColors } from "../../provider/_default";
 import {
-  T_DEFAULT_BUTTON_PROPS,
-  T_DEFINED_STYLED,
+  T_PRE_BUTTON_PROPS,
+  T_WITH_NO_STYLE,
   T_STRING_GENER,
-  T_STYLED_THEME,
+  T_WITH_THEME,
 } from "../../../@types/@types";
 import { unit } from "../../utils/units";
 import { alpha } from "../../utils/alpha";
+import { jsx } from "@emotion/react";
 
-type ButtonProps = T_DEFINED_STYLED &
-  T_DEFAULT_BUTTON_PROPS & {
+type ButtonProps = T_WITH_NO_STYLE<
+  T_PRE_BUTTON_PROPS & {
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
-    rippleDuration?: number;
     variant?: "default" | "outlined" | "ghost" | (string & {});
     colorScheme?: keyof typeof _defaultColors;
     size?: T_STRING_GENER<"xs" | "sm" | "md" | "lg" | "xl">;
-  };
+    loadingRenderer?: (colorScheme: string) => JSX.Element;
+  }
+>;
 
-const ButtonWrapper_ = styled.button<T_STYLED_THEME<ButtonProps>>(
+const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
   // default
   ({ theme, ...props }) => {
     const overrideStyles =
@@ -41,7 +43,6 @@ const ButtonWrapper_ = styled.button<T_STYLED_THEME<ButtonProps>>(
           alignItems: "center",
           transitionProperty:
             "color, background-color, border-color, text-decoration-color, fill, stroke ",
-          transitionBehavior: "cubic-bezier(0.4, 0, 0.2, 1)",
           transitionDuration: "200ms",
           overflow: "hidden",
           position: "relative",
@@ -126,18 +127,24 @@ const ButtonWrapper_ = styled.button<T_STYLED_THEME<ButtonProps>>(
         ?.styles
     ),
 
-  // sx
-  (props) => safeCssObj(props?.sx),
-
   // disabled
-  (props) =>
-    safeCssObj(
+  ({ theme, ...props }) => {
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
+        props.variant!
+      ];
+
+    return safeCssObj(overrideStyles?.disabled?.styles);
+  },
+  (props) => {
+    return safeCssObj(
       props.disabled && {
         pointerEvents: "none",
         opacity: 0.5,
         ...safeCssObj(props.disabledSx),
       }
-    ),
+    );
+  },
 
   // color
   ({ theme, ...props }) => {
@@ -153,9 +160,6 @@ const ButtonWrapper_ = styled.button<T_STYLED_THEME<ButtonProps>>(
           "&:hover": {
             backgroundColor: color?.hover,
           },
-          "&:active": {
-            backgroundColor: color?.active,
-          },
         };
       case "ghost":
         return {
@@ -164,33 +168,36 @@ const ButtonWrapper_ = styled.button<T_STYLED_THEME<ButtonProps>>(
           "&:hover": {
             backgroundColor: "#f0f0f1",
           },
-          "&:active": {
-            backgroundColor: "#e1e2e4",
-          },
         };
       case "outlined":
-        return {
-          boxShadow: `inset 0 0 0 1px ${color?.main}`,
-          color: color?.main,
-          background: "transparent",
-          "&:hover": {
-            backgroundColor: alpha(color?.hover!, 0.1),
-          },
-          "&:active": {
-            backgroundColor: alpha(color?.hover!, 0.16),
-          },
-        };
+        return props.isLoading
+          ? {
+              color: "transparent",
+              background: "transparent",
+              boxShadow: `inset 0 0 0 1px ${color?.main}`,
+            }
+          : {
+              boxShadow: `inset 0 0 0 1px ${color?.main}`,
+              color: color?.main,
+              background: "transparent",
+              "&:hover": {
+                backgroundColor: alpha(color?.hover!, 0.1),
+              },
+            };
       default:
         return;
     }
-  }
+  },
+  // sx
+  (props) => safeCssObj(props?.sx)
 );
 
 const LoadingWrapper_ = styled.span<
-  T_STYLED_THEME<{
+  T_WITH_THEME<{
     loadingSx?: SxProps;
     noDefaultStyling?: boolean;
     variant?: ButtonProps["variant"];
+    colorScheme?: ButtonProps["colorScheme"];
   }>
 >(
   ({ theme, ...props }) => {
@@ -212,10 +219,17 @@ const LoadingWrapper_ = styled.span<
         width: "100%",
         height: "100%",
         cursor: "not-allowed",
-        color: "#374151",
-        backgroundColor: "#D1D5DB",
       }
     );
+  },
+
+  ({ theme, ...props }) => {
+    const color =
+      theme?.theme?.[theme.currentTheme]?.colors?.[props.colorScheme || ""] ||
+      _defaultColors[props.colorScheme || ""];
+    if (props.variant === "outlined")
+      return { color: color?.main, backgroundColor: "transparent" };
+    return { color: "#374151", backgroundColor: "#D1D5DB" };
   },
 
   ({ theme, ...props }) => {
@@ -227,7 +241,7 @@ const LoadingWrapper_ = styled.span<
     return safeCssObj(overrideStyles?.loading?.styles);
   },
 
-  ({ theme, ...props }) => safeCssObj(props?.loadingSx)
+  (props) => safeCssObj(props?.loadingSx)
 );
 
-export { ButtonWrapper_, LoadingWrapper_ };
+export { Button_, LoadingWrapper_ };

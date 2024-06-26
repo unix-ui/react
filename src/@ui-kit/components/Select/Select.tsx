@@ -1,7 +1,6 @@
 import { useClickAway } from "@uidotdev/usehooks";
 import React, {
   Fragment,
-  HtmlHTMLAttributes,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -10,11 +9,11 @@ import React, {
 import { SelectProps } from "./@types";
 import { cn } from "../../../utils/cn";
 import { Transition } from "../Transition/Transition";
-import { useSelectStyled } from "./select.styled";
-import SelectItem from "./SelectItem";
-import { useTheme } from "../../hooks";
-import { safeCssObj, safeObj } from "../../../utils/safeObj";
+import { safeObj } from "../../../utils/safeObj";
 import { get_transition_props } from "../../../utils/transition";
+import { Select_, SelectItem_ } from "./select.styled";
+import { unit } from "../../utils/units";
+import { _defaultSelectProps } from "./_default";
 
 function modifiedItemRenderer(
   itemRenderer: Exclude<SelectProps["itemRenderer"], undefined>,
@@ -35,9 +34,11 @@ function modifiedItemRenderer(
 }
 
 const SelectComp = <T extends unknown[]>(
-  props: SelectProps<T, T[0]>,
+  _props: SelectProps<T, T[0]>,
   _ref: React.ForwardedRef<HTMLDivElement>
 ) => {
+  const props = { ..._defaultSelectProps, ..._props };
+
   const {
     inputRenderer,
     value,
@@ -46,57 +47,49 @@ const SelectComp = <T extends unknown[]>(
     itemRenderer,
     activeOn,
     itemToShow,
-    className,
+    colorScheme,
     onClick,
     transitionProps,
     ...rest
   } = props;
 
-  const { className: transtitionClassName } = safeObj(transitionProps);
+  const { sx, ...restTransition } = safeObj(transitionProps);
 
-  const optionsRef = useRef<HTMLDivElement>(null);
   const ref = useClickAway<HTMLDivElement>(() => setShow(false));
 
   useImperativeHandle(_ref, () => ref.current);
 
   const [reverse, setReverse] = useState(false);
 
-  const styled = useSelectStyled({ reverse, sx: props.sx });
-
   const [show, setShow] = useState(false);
-
   useEffect(() => {
-    function handleReverse() {
-      setReverse(
-        window.innerHeight <
-          (optionsRef.current?.getBoundingClientRect().bottom || 0)
-      );
-    }
-    handleReverse();
+    // function handleReverse() {
+    //   setReverse(
+    //     window.innerHeight <
+    //       (optionsRef.current?.getBoundingClientRect().bottom || 0)
+    //   );
+    // }
+    // handleReverse();
+    // console.log(optionsRef);
     if (show) {
-      window.addEventListener("scroll", () => handleReverse());
-      window.addEventListener("resize", () => handleReverse());
-      const activeItem =
-        optionsRef.current?.querySelector<HTMLDivElement>("[data-active=true]");
-
-      optionsRef.current?.scrollTo({ top: activeItem?.offsetTop });
+      // window.addEventListener("scroll", () => handleReverse());
+      // window.addEventListener("resize", () => handleReverse());
     }
 
     return () => {
-      window.removeEventListener("scroll", handleReverse);
-      window.removeEventListener("resize", handleReverse);
+      // window.removeEventListener("scroll", handleReverse);
+      // window.removeEventListener("resize", handleReverse);
     };
-  }, [optionsRef, show]);
+  }, [ref, show]);
 
   function handleChange(item: (typeof options)[0], i: number) {
     onChange && onChange(item, i);
-    setShow(false);
+    props.disableHideOnChange && setShow(false);
   }
 
   return (
-    <div
+    <Select_
       ref={ref}
-      className={cn(styled.wrapper, className)}
       onClick={(e) => {
         setShow(true);
         onClick && onClick(e);
@@ -106,25 +99,41 @@ const SelectComp = <T extends unknown[]>(
       {inputRenderer}
       <Transition
         show={show}
-        ref={optionsRef}
-        className={cn(styled.transition, transtitionClassName)}
-        style={{
-          maxHeight: window.innerHeight / 2,
+        ref={(el) => {
+          const activeItem =
+            el?.querySelector<HTMLDivElement>("[data-active=true]");
+
+          activeItem && el?.scrollTo({ top: activeItem?.offsetTop });
         }}
-        {...transitionProps}
+        sx={{
+          maxHeight: window.innerHeight / 2,
+          display: "flex",
+          flexDirection: "column",
+          gap: unit.rem(0.5),
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100%",
+          zIndex: "9999",
+          background: "#fff",
+          padding: unit.spacing(0.5),
+          overflow: "auto",
+          ...sx,
+        }}
+        {...restTransition}
         {...get_transition_props(
           {
             enteringStyle: {
               opacity: 0,
-              transform: "translateY(12px)",
+              transform: "translateX(-50%) translateY(12px)",
             },
             activeStyle: {
               opacity: 1,
-              transform: "translateY(0)",
+              transform: "translateX(-50%) translateY(0)",
             },
             exitingStyle: {
               opacity: 0,
-              transform: "translateY(12px)",
+              transform: "translateX(-50%) translateY(12px)",
             },
           },
           transitionProps
@@ -140,22 +149,22 @@ const SelectComp = <T extends unknown[]>(
                   activeOn ? activeOn(item) : value === item
                 )
               ) : (
-                <SelectItem
+                <SelectItem_
+                  colorScheme={colorScheme}
                   data-active={activeOn ? activeOn(item) : value === item}
-                  active={activeOn ? activeOn(item) : value === item}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleChange(item, i);
                   }}
                 >
                   <>{itemToShow ? itemToShow(item) : item}</>
-                </SelectItem>
+                </SelectItem_>
               )}
             </Fragment>
           );
         })}
       </Transition>
-    </div>
+    </Select_>
   );
 };
 

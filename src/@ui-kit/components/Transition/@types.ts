@@ -1,12 +1,5 @@
-import { HTMLAttributes } from "react";
+import { ComponentProps, HTMLAttributes } from "react";
 import { SxProps } from "../../types";
+import { Transition_ } from "./transition.styled";
 
-type T_ANIMATION = SxProps & { duration?: number; transitionType?: string };
-
-export type TransitionProps = HTMLAttributes<HTMLDivElement> & {
-  enteringStyle?: T_ANIMATION;
-  activeStyle?: T_ANIMATION;
-  exitingStyle?: T_ANIMATION;
-  show?: boolean;
-  sx?: SxProps;
-};
+export type TransitionProps = ComponentProps<typeof Transition_>;

@@ -10,4 +10,4 @@ export const safeCssObjOn = (
   p?: unknown,
   onTrue?: SxProps | CSSObject,
   onFalse?: SxProps | CSSObject
-) => (p ? onTrue : onFalse);
+) => (p ? onTrue || {} : onFalse || {});

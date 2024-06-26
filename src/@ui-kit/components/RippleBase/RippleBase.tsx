@@ -1,13 +1,6 @@
-import {
-  ButtonHTMLAttributes,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import { useRipple } from "../../hooks";
-import { RipplesAttr } from "../../types";
-import { cn } from "../../../utils/cn";
-import { useRippleBaseStyled } from "./ripple-base.styled";
+import { RippleBase_ } from "./ripple-base.styled";
 import { RippleBaseProps } from "./@types";
 
 const RippleBase = forwardRef<HTMLButtonElement, RippleBaseProps>(
@@ -17,20 +10,25 @@ const RippleBase = forwardRef<HTMLButtonElement, RippleBaseProps>(
       children,
       disableRipple,
       rippleColor,
-      className,
       rippleRenderer,
-      sx,
+      rippleDuration,
       ...rest
     } = props;
+
     useImperativeHandle(_ref, () => ref.current!);
-    const { ripple } = useRippleBaseStyled({ sx });
-    const ripples = useRipple(ref, disableRipple, rippleColor, rippleRenderer);
+    const ripples = useRipple(
+      ref,
+      disableRipple,
+      rippleColor,
+      rippleRenderer,
+      rippleDuration
+    );
 
     return (
-      <button ref={ref} className={cn(ripple, className)} {...rest}>
+      <RippleBase_ ref={ref} {...rest}>
         {children}
         {ripples}
-      </button>
+      </RippleBase_>
     );
   }
 );
