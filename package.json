@@ -1,11 +1,11 @@
 {
   "name": "@unix-ui/react",
-  "version": "1.0.0-beta",
+  "version": "1.0.1-beta",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": {
-    "url": "https://github.com/sirarifarid/venux-ui"
+    "url": "https://github.com/unix-ui/react"
   },
   "scripts": {
     "dev": "vite",

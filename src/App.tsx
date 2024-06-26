@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Checkbox from "./@ui-kit/components/Checkbox/Checkbox";
-import { VenuxThemeProvider } from "./@ui-kit/provider";
+import { UnixThemeProvider } from "./@ui-kit/provider";
 import { Button } from "./@ui-kit/components";
 import { Transition } from "./@ui-kit/components/Transition/Transition";
 import { Select } from "./@ui-kit/components/Select/Select";
@@ -9,7 +9,7 @@ import { Datepicker } from "./@ui-kit/components/Datepickers/Datepicker";
 function App() {
   const [checked, setChecked] = useState(false);
   return (
-    <VenuxThemeProvider
+    <UnixThemeProvider
       theme={{
         currentTheme: "light",
         theme: {
@@ -47,7 +47,7 @@ function App() {
         colorScheme="red"
       />
       <Button>asds</Button>
-    </VenuxThemeProvider>
+    </UnixThemeProvider>
   );
 }
 

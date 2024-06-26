@@ -4,7 +4,7 @@ import { safeCssObj } from "../../utils/safeObj";
 import { ThemeContext } from "../context/ThemeContext";
 import { Global, ThemeProvider } from "@emotion/react";
 
-const VenuxThemeProvider = ({
+const UnixThemeProvider = ({
   children,
   theme,
 }: {
@@ -45,4 +45,4 @@ const VenuxThemeProvider = ({
   );
 };
 
-export { VenuxThemeProvider };
+export { UnixThemeProvider };
