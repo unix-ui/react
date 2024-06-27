@@ -1,5 +1,5 @@
 export function debounce<T extends Function>(func: T, timeout = 100): T {
-  let timer: number;
+  let timer: any;
   const _fn = (...args: any) => {
     clearTimeout(timer);
     timer = setTimeout(() => {

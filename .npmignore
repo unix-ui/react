@@ -6,6 +6,8 @@ tsconfig.node.json
 tsconfig.json
 index.html
 .gitignore
-.bun.lockb
+bun.lockb
 .npmignore
 README.md
+vite.config.ts
+.eslintrc.cjs

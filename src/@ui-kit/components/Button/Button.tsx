@@ -1,9 +1,4 @@
-import React, {
-  ComponentProps,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { LoadingIcon } from "../LoadingIcon/LoadingIcon";
 import { useRipple } from "../../hooks/useRipple";
 import { safeObj } from "../../../utils/safeObj";

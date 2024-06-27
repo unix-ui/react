@@ -1,11 +1,9 @@
 import { CSSObject } from "@emotion/react";
-import { SxProps } from "./types";
-
-interface MyTheme {}
+import { SxProps, ThemeProps } from "./types";
 
 declare module "react" {
   interface Attributes {
-    css?: CSSObject<MyTheme>;
+    css?: CSSObject;
     sx?: SxProps;
   }
 }

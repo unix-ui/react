@@ -1,9 +1,6 @@
 import { CSSObject } from "@emotion/react";
-import { ComponentProps } from "react";
-import { Button_ } from "../components/Button/button.styled";
-import { T_OVERRIDE_SX, T_VARIANTS_THEME } from "../../@types/@types";
+import { T_OVERRIDE_SX } from "../../@types/@types";
 import { ButtonTheme } from "./@button";
-import { ButtonProps } from "../components";
 import { CheckboxProps } from "../components/Checkbox/@types";
 import { ColorShades } from "./@colors";
 

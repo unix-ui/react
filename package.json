@@ -7,10 +7,12 @@
   "repository": {
     "url": "https://github.com/unix-ui/react"
   },
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build-package": "tsup",
+    "build-rollup": "rollup -c && cpy 'src/global.d.ts' dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -18,11 +20,35 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@uidotdev/usehooks": "^2.4.1",
+    "fs-extra": "^11.2.0",
     "moment": "^2.30.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./Button": {
+      "import": "./dist/components/Button/index.js",
+      "types": "./dist/components/Button/index.d.ts"
+    },
+    "./Checkbox": {
+      "import": "./dist/components/Checkbox/index.js",
+      "types": "./dist/components/Checkbox/index.d.ts"
+    },
+    "./Transition": {
+      "import": "./dist/components/Transition/index.js",
+      "types": "./dist/components/Transition/index.d.ts"
+    },
+    "./LoadingIcon": {
+      "import": "./dist/components/LoadingIcon/index.js",
+      "types": "./dist/components/LoadingIcon/index.d.ts"
+    }
+  },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
@@ -31,6 +57,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "path": "^0.12.7",
     "tsup": "^8.1.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"

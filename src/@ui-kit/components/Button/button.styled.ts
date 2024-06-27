@@ -10,7 +10,6 @@ import {
 } from "../../../@types/@types";
 import { unit } from "../../utils/units";
 import { alpha } from "../../utils/alpha";
-import { jsx } from "@emotion/react";
 
 type ButtonProps = T_WITH_NO_DEFAULT_STYLE<
   T_PRE_BUTTON_PROPS & {

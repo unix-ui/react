@@ -1,14 +1,6 @@
 import { useClickAway } from "@uidotdev/usehooks";
-import React, {
-  Fragment,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { Fragment, useImperativeHandle, useState } from "react";
 import { SelectProps } from "./@types";
-import { cn } from "../../../utils/cn";
-import { Transition } from "../Transition/Transition";
 import { safeObj } from "../../../utils/safeObj";
 import { get_transition_props } from "../../../utils/transition";
 import { Select_, SelectItem_ } from "./select.styled";
@@ -22,15 +14,14 @@ function modifiedItemRenderer(
   active: boolean
 ) {
   const _item = itemRenderer(item);
-  return React.cloneElement<React.HtmlHTMLAttributes<HTMLElement>>(_item, {
+  return React.cloneElement<
+    React.HtmlHTMLAttributes<HTMLElement> & { "data-active": boolean }
+  >(_item, {
     onClick(e) {
       _item.props.onClick && _item.props.onClick(e);
       e.stopPropagation();
     },
-    className: cn(
-      _item.props.className,
-      active && "venux-ui-select-item-active"
-    ),
+    "data-active": active,
   });
 }
 

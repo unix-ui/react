@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 import { SxProps } from ".";
 import { T_OVERRIDE_SX, T_VARIANTS_THEME } from "../../@types/@types";
 import { Button_ } from "../components/Button/button.styled";
-import { ButtonProps } from "../components";
+import { ButtonProps } from "../components/Button";
 
 type ButtonOverrideStyles = {
   removeDefaultStyling?: boolean;

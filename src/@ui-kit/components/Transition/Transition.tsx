@@ -4,7 +4,7 @@ import { Transition_ } from "./transition.styled";
 
 const Transition = forwardRef<HTMLDivElement, TransitionProps>((props, ref) => {
   const [transition, setTransition] = useState(props.show);
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<any>();
   useEffect(() => {
     if (!props.show) {
       timeoutRef.current = setTimeout(() => {
