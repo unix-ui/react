@@ -22,6 +22,10 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   target: "es2020",
   async onSuccess() {
+    fs.copyFile(
+      path.join(__dirname, "src/global.d.ts"),
+      path.join(__dirname, "./dist/global.d.ts")
+    );
     const exp = {};
     let dirs = await fs.readdir(path.join(__dirname, "./dist"));
     const packages = JSON.parse(

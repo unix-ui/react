@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Checkbox from "./@ui-kit/components/Checkbox/Checkbox";
-import { UnixThemeProvider } from "./@ui-kit/provider";
+import { UnixThemeProvider } from "./@ui-kit";
 import { Transition } from "./@ui-kit/components/Transition/Transition";
 import { Select } from "./@ui-kit/components/Select/Select";
 import { Datepicker } from "./@ui-kit/components/Datepickers/Datepicker";

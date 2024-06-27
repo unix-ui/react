@@ -1,5 +1,5 @@
 import { CSSObject } from "@emotion/react";
-import { SxProps, ThemeProps } from "./types";
+import { SxProps } from "./@ui-kit/types";
 
 declare module "react" {
   interface Attributes {

@@ -1,4 +1,4 @@
-import { colors } from "../@ui-kit/provider";
+import { colors } from "../@ui-kit/colors";
 import { SxProps, RipplesAttr, ThemeProps } from "../@ui-kit/types/@types";
 
 export type T_WITH_NO_DEFAULT_STYLE<T> = T & {
