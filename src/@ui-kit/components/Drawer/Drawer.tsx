@@ -1,25 +1,21 @@
-import React, { HTMLAttributes } from "react";
-import { TransitionProps } from "../Transition/@types";
+import React from "react";
 import { Transition } from "../Transition/Transition";
-import { get_transition_props } from "../../../utils/transition";
-import { cn } from "../../../utils/cn";
 import { safeObj } from "../../../utils/safeObj";
-import { useDrawerStyled } from "./drawer.styled";
+import { alpha } from "../../utils";
+import { DrawerProps } from "./@types";
 
-export type DrawerProps = TransitionProps & {
-  show: boolean;
-  onClose?: () => void;
-  backdropProps?: TransitionProps;
-};
-
-const Drawer = (props: DrawerProps) => {
-  const { onClose, className, backdropProps, ...rest } = props;
-  const {
-    onClick,
-    className: backdropClassName,
-    ...backdropRest
-  } = safeObj(backdropProps);
-  const styled = useDrawerStyled();
+const Drawer = ({ position = "right", ...props }: DrawerProps) => {
+  const { onClose, backdropProps, sx, ...rest } = props;
+  const { onClick, sx: backDropSx, ...backdropRest } = safeObj(backdropProps);
+  const translate = `${
+    position === "top"
+      ? "0 -100%"
+      : position === "bottom"
+      ? "0 100%"
+      : position === "left"
+      ? "-100% 0"
+      : "100% 0"
+  }`;
   return (
     <>
       <Transition
@@ -28,61 +24,50 @@ const Drawer = (props: DrawerProps) => {
           onClick && onClick(e);
         }}
         show={props.show}
-        className={cn(styled.backdrop, backdropClassName)}
-        {...get_transition_props(
-          {
-            enteringStyle: {
-              opacity: 0,
-            },
-            activeStyle: {
-              opacity: 1,
-            },
-            exitingStyle: {
-              opacity: 0,
-            },
-          },
-          backdropProps
-        )}
+        sx={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: alpha("#000000", 0.3),
+          zIndex: 9999,
+          ...safeObj(backDropSx),
+        }}
+        enteringStyle={{
+          opacity: 0,
+        }}
+        activeStyle={{
+          opacity: 1,
+        }}
+        exitingStyle={{
+          opacity: 0,
+        }}
         {...backdropRest}
       />
       <Transition
-        // className={cn(styled.drawer, className)}
         sx={{
           overflowY: "auto",
           position: "fixed",
-          top: "0",
+          [position]: "0",
           height: "100vh",
           zIndex: 10000,
           width: "fit-content",
-          transition: "all 300ms ease-in-out",
+          ...safeObj(sx),
         }}
         enteringStyle={{
-          right: "-100%",
-          duration: 300,
+          translate,
+          duration: 400,
+          animationType: "cubic-bezier(0.64, 0.37, 0.01, 0.68)",
         }}
         activeStyle={{
-          right: 0,
-          duration: 300,
+          translate: "0 0",
         }}
         exitingStyle={{
-          right: "-100%",
-          duration: 300,
+          translate,
+          animationType: "ease-out",
+          duration: 200,
         }}
-        // {...get_transition_props(
-        //   {
-        //     enteringStyle: {
-        //       right: "-100%",
-        //     },
-        //     activeStyle: {
-        //       right: 0,
-        //       duration: 300,
-        //     },
-        //     exitingStyle: {
-        //       right: "-100%",
-        //     },
-        //   },
-        //   backdropProps
-        // )}
         {...rest}
       />
     </>

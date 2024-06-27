@@ -2,7 +2,6 @@ import { useClickAway } from "@uidotdev/usehooks";
 import React, { Fragment, useImperativeHandle, useState } from "react";
 import { SelectProps } from "./@types";
 import { safeObj } from "../../../utils/safeObj";
-import { get_transition_props } from "../../../utils/transition";
 import { Select_, SelectItem_ } from "./select.styled";
 import { unit } from "../../utils/units";
 import { _defaultSelectProps } from "./_default";
@@ -92,23 +91,18 @@ const SelectComp = <T extends unknown[]>(
           ...transitionSx,
         }}
         {...restTransition}
-        {...get_transition_props(
-          {
-            enteringStyle: {
-              opacity: 0,
-              transform: "translateY(12px)",
-            },
-            activeStyle: {
-              opacity: 1,
-              transform: "translateY(0)",
-            },
-            exitingStyle: {
-              opacity: 0,
-              transform: "translateY(12px)",
-            },
-          },
-          transitionProps
-        )}
+        enteringStyle={{
+          opacity: 0,
+          transform: "translateY(12px)",
+        }}
+        activeStyle={{
+          opacity: 1,
+          transform: "translateY(0)",
+        }}
+        exitingStyle={{
+          opacity: 0,
+          transform: "translateY(12px)",
+        }}
       >
         {options?.map((item, i) => {
           return (

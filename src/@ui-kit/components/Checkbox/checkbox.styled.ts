@@ -120,8 +120,8 @@ export const CheckboxSpan_ = styled.span<
       _a?.checkbox?.unchecked?.styles
     );
   },
-  (props) => safeCssObj(props.sx),
-  (props) => ({ width: props.size, height: props.size })
+  (props) => ({ width: props.size, height: props.size }),
+  (props) => safeCssObj(props.sx)
 );
 
 export const CheckboxLabel_ = styled.span<

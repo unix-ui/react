@@ -7,7 +7,8 @@ export type DatepickerProps = T_WITH_NO_THEME<
   Omit<ComponentProps<typeof DatePicker_>, "value" | "onChange"> & {
     value?: Moment;
     onChange?: (e: Moment) => void;
-    calenderRender?: (props: CalenderRendererProps) => JSX.Element;
+    calenderRenderer?: (props: CalenderRendererProps) => JSX.Element;
+    controlsRenderer?: (props: CalenderControlsRendererProps) => JSX.Element;
   }
 >;
 
@@ -24,6 +25,13 @@ export type CalenderRendererProps = {
   handleDateClickCurrentMonth: (date: number) => void;
   handleDateClickNextMonth: (date: number) => void;
 
+  handlePrevMonth: () => void;
+  handleNextMonth: () => void;
+};
+
+export type CalenderControlsRendererProps = {
+  handleMonthChange: (month: number) => void;
+  handleYearChange: (year: number) => void;
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
 };

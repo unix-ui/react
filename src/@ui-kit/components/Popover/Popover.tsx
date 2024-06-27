@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { TransitionProps } from "../Transition/@types";
 import { Transition } from "../Transition/Transition";
-import { get_transition_props } from "../../../utils/transition";
 import { debounce } from "../../utils";
 
 type VerticalPosition = "top" | "bottom";
@@ -96,20 +95,15 @@ const Popover = ({ style, elRef, spacing, _ref, ...props }: PopoverProps) => {
         window.addEventListener("resize", () => handleResize(e));
       }}
       style={{ position: "fixed", zIndex: 9999, ...style }}
-      {...get_transition_props(
-        {
-          enteringStyle: {
-            opacity: 0,
-          },
-          activeStyle: {
-            opacity: 1,
-          },
-          exitingStyle: {
-            opacity: 0,
-          },
-        },
-        props
-      )}
+      enteringStyle={{
+        opacity: 0,
+      }}
+      activeStyle={{
+        opacity: 1,
+      }}
+      exitingStyle={{
+        opacity: 0,
+      }}
       {...props}
     />
   );

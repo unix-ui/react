@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Checkbox from "./@ui-kit/components/Checkbox/Checkbox";
 import { UnixThemeProvider } from "./@ui-kit/provider";
-import { Button } from "./@ui-kit/components";
 import { Transition } from "./@ui-kit/components/Transition/Transition";
 import { Select } from "./@ui-kit/components/Select/Select";
 import { Datepicker } from "./@ui-kit/components/Datepickers/Datepicker";
+import { Button } from "./@ui-kit/components/Button";
+import Drawer from "./@ui-kit/components/Drawer/Drawer";
 
 function App() {
   const [checked, setChecked] = useState(false);
@@ -40,13 +41,14 @@ function App() {
         options={[1, 2, 3]}
         inputRenderer={<input />}
       />
-      <Datepicker
-        onChange={(e) => {
-          console.log(e.format("YYYY-MM-DD"));
-        }}
-        colorScheme="red"
-      />
+
       <Button>asds</Button>
+      <Drawer
+        onClose={() => setChecked(false)}
+        position="left"
+        show={checked}
+        sx={{ width: "100vw", height: 100, background: "#f23" }}
+      ></Drawer>
     </UnixThemeProvider>
   );
 }

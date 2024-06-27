@@ -1,8 +1,9 @@
 import { CSSObject } from "@emotion/react";
-import { T_OVERRIDE_SX } from "../../@types/@types";
+import { T_WITH_NO_DEFAULT_STYLE } from "../../@types/@types";
 import { ButtonTheme } from "./@button";
-import { CheckboxProps } from "../components/Checkbox/@types";
 import { ColorShades } from "./@colors";
+import { CheckboxTheme } from "./@checkbox";
+import { DatepickerProps } from "../components/Datepickers";
 
 export type SxProps = CSSObject;
 
@@ -14,30 +15,6 @@ export type Colors = Partial<
   ColorsGen<"primary" | "red" | "green" | "orange" | "blue">
 > & { [props: string & {}]: Partial<ColorShades> };
 
-type CheckboxOverrideStyles = {
-  checkbox?: {
-    checked?: T_OVERRIDE_SX;
-    unchecked?: T_OVERRIDE_SX;
-  };
-  removeDefaultStyling?: boolean;
-  label?: T_OVERRIDE_SX;
-  styles?: T_OVERRIDE_SX;
-};
-
-type CheckboxDefaultProps<T extends string> = {
-  [K in T]?: CheckboxProps;
-};
-
-type CheckboxSizes<T extends string> = {
-  [K in T]?: {
-    checkbox: {
-      checked: T_OVERRIDE_SX;
-      unchecked: T_OVERRIDE_SX;
-    };
-    icon?: T_OVERRIDE_SX;
-  };
-};
-
 export type ThemeProps = {
   currentTheme: string;
   globalStyles?: SxProps;
@@ -46,25 +23,17 @@ export type ThemeProps = {
       colors?: Colors;
 
       Button?: ButtonTheme;
-      Checkbox?: {
-        defaultProps?: CheckboxDefaultProps<"all" | "default"> & {
-          [props: string]: CheckboxProps | undefined;
-        };
-        overrideStyles?: {
-          default?: CheckboxOverrideStyles;
-          [props: string]: CheckboxOverrideStyles | undefined;
-        };
-        sizes?: CheckboxSizes<"xs" | "sm" | "md" | "lg" | "xl"> & {
-          [props: string]:
-            | {
-                checkbox: {
-                  checked: T_OVERRIDE_SX;
-                  unchecked: T_OVERRIDE_SX;
-                };
-                icon?: T_OVERRIDE_SX;
-              }
-            | undefined;
-        };
+      Checkbox?: CheckboxTheme;
+      Datepicker?: {
+        defaultProps?: DatepickerProps;
+        overrideStyles?: T_WITH_NO_DEFAULT_STYLE<{
+          dateButtons?: SxProps;
+          currentMonthButtonsSx?: SxProps;
+          nextMonthButtonsSx?: SxProps;
+          prevMonthButtonsSx?: SxProps;
+          currentDateSx?: SxProps;
+          activeDateStyle?: SxProps;
+        }>;
       };
       globalStyles?: SxProps;
     };

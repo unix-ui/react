@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { SxProps } from "../../types";
 import { T_WITH_SCHEME } from "../../../@types/@types";
 
-type T_ANIMATION = SxProps & { duration?: number };
+type T_ANIMATION = SxProps & { duration?: number; animationType?: string };
 
 type TransitionProps = T_WITH_SCHEME<{
   enteringStyle?: T_ANIMATION;
@@ -12,22 +12,48 @@ type TransitionProps = T_WITH_SCHEME<{
   exitingStyle?: T_ANIMATION;
   show?: boolean;
 }>;
-const keyf = (props?: TransitionProps) =>
-  keyframes({ from: props?.enteringStyle, to: props?.activeStyle });
+const keyf = (props?: { from: any; to: any }) =>
+  keyframes({ from: props?.from, to: props?.to });
 
 export const Transition_ = styled.div<TransitionProps>((props) => ({
   ...safeCssObj(props.sx),
+  transition: `all ${props.exitingStyle?.duration || 150}ms ${
+    props.exitingStyle?.animationType || ""
+  }`,
+
   ...safeCssObjOn(
     props.show,
     {
       animation: `${keyf({
-        enteringStyle: props.enteringStyle,
-        activeStyle: props.activeStyle,
-      })} ${props.enteringStyle?.duration || 150}ms linear`,
+        from: {
+          ...safeCssObj(props.enteringStyle),
+          duration: "" as any,
+          animationType: "",
+        },
+        to: {
+          ...safeCssObj(props.activeStyle),
+          duration: "" as any,
+          animationType: "",
+        },
+      })} ${props.enteringStyle?.duration || 150}ms forwards ${
+        props.enteringStyle?.animationType || ""
+      }`,
     },
     {
-      ...safeCssObj(props.exitingStyle),
-      transition: `all ${props.exitingStyle?.duration || 150}ms linear`,
+      animation: `${keyf({
+        from: {
+          ...safeCssObj(props.activeStyle),
+          duration: "" as any,
+          animationType: "",
+        },
+        to: {
+          ...safeCssObj(props.exitingStyle),
+          duration: "" as any,
+          animationType: "",
+        },
+      })} ${props.exitingStyle?.duration || 150}ms forwards ${
+        props.exitingStyle?.animationType || ""
+      }`,
     }
   ),
 }));
