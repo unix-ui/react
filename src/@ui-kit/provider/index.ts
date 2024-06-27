@@ -1,2 +1,2 @@
 export * from "./ThemeProvider";
-export * from "./_default";
+export * from "../colors";

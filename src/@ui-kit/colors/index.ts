@@ -1,6 +1,6 @@
 import { Colors } from "../types";
 
-export const _defaultColors: Colors = {
+export const colors: Colors = {
   primary: {
     main: "#4a40f2",
     "900": "#5c53f3",

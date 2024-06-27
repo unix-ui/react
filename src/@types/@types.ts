@@ -1,4 +1,4 @@
-import { _defaultColors } from "../@ui-kit/provider";
+import { colors } from "../@ui-kit/provider";
 import { SxProps, RipplesAttr, ThemeProps } from "../@ui-kit/types/@types";
 
 export type T_WITH_NO_DEFAULT_STYLE<T> = T & {
@@ -22,7 +22,7 @@ export type T_ACTION_PROPS = {
 export type T_WITH_THEME<T> = T & { theme?: ThemeProps };
 export type T_WITH_NO_THEME<T> = Omit<T, "theme">;
 export type T_WITH_SCHEME<T> = T & {
-  colorScheme?: keyof typeof _defaultColors;
+  colorScheme?: keyof typeof colors;
 };
 export type T_WITH_RIPPLE<T> = T & {
   disableRipple?: boolean;

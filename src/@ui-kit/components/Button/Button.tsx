@@ -5,7 +5,7 @@ import { safeObj } from "../../../utils/safeObj";
 import { useTheme } from "../../hooks";
 import { Button_, LoadingWrapper_ } from "./button.styled";
 import { _defaultButtonProps } from "./_default";
-import { _defaultColors } from "../../provider/_default";
+import { colors } from "../../colors";
 import { ButtonProps } from "./@types";
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((_props, _ref) => {
@@ -40,7 +40,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((_props, _ref) => {
         ? (
             theme?.theme?.[theme.currentTheme]?.colors?.[
               props.colorScheme || ""
-            ] || _defaultColors[props.colorScheme || ""]
+            ] || colors[props.colorScheme || ""]
           )?.main
         : props.variant === "ghost"
         ? "#b4b6bb"

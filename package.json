@@ -26,10 +26,6 @@
     "react-dom": "^18.3.1"
   },
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
     "./Button": {
       "import": "./dist/components/Button/index.js",
       "types": "./dist/components/Button/index.d.ts"
@@ -38,13 +34,49 @@
       "import": "./dist/components/Checkbox/index.js",
       "types": "./dist/components/Checkbox/index.d.ts"
     },
+    "./LoadingIcon": {
+      "import": "./dist/components/LoadingIcon/index.js",
+      "types": "./dist/components/LoadingIcon/index.d.ts"
+    },
+    "./Popover": {
+      "import": "./dist/components/Popover/index.js",
+      "types": "./dist/components/Popover/index.d.ts"
+    },
+    "./Datepickers": {
+      "import": "./dist/components/Datepickers/index.js",
+      "types": "./dist/components/Datepickers/index.d.ts"
+    },
+    "./Layouts": {
+      "import": "./dist/components/Layouts/index.js",
+      "types": "./dist/components/Layouts/index.d.ts"
+    },
+    "./RippleBase": {
+      "import": "./dist/components/RippleBase/index.js",
+      "types": "./dist/components/RippleBase/index.d.ts"
+    },
+    "./Select": {
+      "import": "./dist/components/Select/index.js",
+      "types": "./dist/components/Select/index.d.ts"
+    },
     "./Transition": {
       "import": "./dist/components/Transition/index.js",
       "types": "./dist/components/Transition/index.d.ts"
     },
-    "./LoadingIcon": {
-      "import": "./dist/components/LoadingIcon/index.js",
-      "types": "./dist/components/LoadingIcon/index.d.ts"
+    "./hooks": {
+      "import": "./dist/hooks/index.js",
+      "types": "./dist/hooks/index.d.ts"
+    },
+    "./provider": {
+      "import": "./dist/provider/index.js",
+      "types": "./dist/provider/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
     }
   },
   "devDependencies": {

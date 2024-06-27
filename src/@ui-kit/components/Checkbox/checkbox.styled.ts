@@ -2,7 +2,7 @@ import { HTMLAttributes, InputHTMLAttributes } from "react";
 import { safeCssObj, safeCssObjOn } from "../../../utils/safeObj";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { _defaultColors } from "../../provider/_default";
+import { colors } from "../../colors";
 import { getColor } from "../../../utils/get";
 import { ThemeProps } from "../../types";
 import {
@@ -19,7 +19,7 @@ type CheckboxProps = T_WITH_NO_DEFAULT_STYLE<{
   label?: string;
   iconSize?: number;
   checked?: boolean;
-  colorScheme?: keyof typeof _defaultColors;
+  colorScheme?: keyof typeof colors;
   variant?: T_STRING_GENER<"default">;
 }>;
 

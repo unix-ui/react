@@ -35,18 +35,27 @@ export default defineConfig({
       folder.forEach(async (_a) => {
         if (_a.includes("index.js")) {
           const _p = `./dist/${el}/`;
-          exp[el] = { import: _p + "index.js", types: _p + "index.d.ts" };
+          exp["./" + el] = {
+            import: _p + "index.js",
+            types: _p + "index.d.ts",
+          };
         } else {
           (await fs.readdir(path.join(__dirname, "./dist", el, _a))).forEach(
             () => {
               const _p = `./dist/${el}/${_a}/`;
-              exp[_a] = { import: _p + "index.js", types: _p + "index.d.ts" };
+              exp["./" + _a] = {
+                import: _p + "index.js",
+                types: _p + "index.d.ts",
+              };
             }
           );
         }
       });
     }
     packages.exports = exp;
-    fs.writeFileSync(path.join(__dirname, "./package.json"), packages);
+    fs.writeFileSync(
+      path.join(__dirname, "./package.json"),
+      JSON.stringify(packages)
+    );
   },
 });

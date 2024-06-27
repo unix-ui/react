@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { safeCssObj, safeCssObjOn } from "../../../utils/safeObj";
 import { SxProps } from "../../types/@types";
-import { _defaultColors } from "../../provider/_default";
+import { colors } from "../../colors";
 import {
   T_PRE_BUTTON_PROPS,
   T_WITH_NO_DEFAULT_STYLE,
@@ -16,7 +16,7 @@ type ButtonProps = T_WITH_NO_DEFAULT_STYLE<
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
     variant?: "default" | "outlined" | "ghost" | (string & {});
-    colorScheme?: keyof typeof _defaultColors;
+    colorScheme?: keyof typeof colors;
     size?: T_STRING_GENER<"xs" | "sm" | "md" | "lg" | "xl">;
     loadingRenderer?: (colorScheme: string) => JSX.Element;
   }
@@ -149,7 +149,7 @@ const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
   ({ theme, ...props }) => {
     const color =
       theme?.theme?.[theme.currentTheme]?.colors?.[props.colorScheme || ""] ||
-      _defaultColors[props.colorScheme || ""];
+      colors[props.colorScheme || ""];
 
     switch (props.variant) {
       case "default":
@@ -225,7 +225,7 @@ const LoadingWrapper_ = styled.span<
   ({ theme, ...props }) => {
     const color =
       theme?.theme?.[theme.currentTheme]?.colors?.[props.colorScheme || ""] ||
-      _defaultColors[props.colorScheme || ""];
+      colors[props.colorScheme || ""];
     if (props.variant === "outlined")
       return { color: color?.main, backgroundColor: "transparent" };
     return { color: "#374151", backgroundColor: "#D1D5DB" };
