@@ -3,13 +3,13 @@ import Checkbox from "./@ui-kit/components/Checkbox/Checkbox";
 import { UnixThemeProvider } from "./@ui-kit";
 import { Transition } from "./@ui-kit/components/Transition/Transition";
 import { Select } from "./@ui-kit/components/Select/Select";
-import { Datepicker } from "./@ui-kit/components/Datepickers/Datepicker";
 import { Button } from "./@ui-kit/components/Button";
-import Drawer from "./@ui-kit/components/Drawer/Drawer";
 import { Modal } from "./@ui-kit/components/Modal";
+import { Tabs } from "./@ui-kit/components/Tabs/Tabs";
 
 function App() {
   const [checked, setChecked] = useState(false);
+  const [checkedd, setCheckedd] = useState(2);
   return (
     <UnixThemeProvider
       theme={{
@@ -22,7 +22,6 @@ function App() {
                 default: {
                   button: {
                     styles: { backgroundColor: "red" },
-                    removeDefaultStyling: true,
                   },
                 },
                 new_variant: {
@@ -60,10 +59,24 @@ function App() {
         inputRenderer={<input />}
       />
 
-      <Button variant="default">asds</Button>
+      <Button sx={{ backgroundColor: "red" }} variant="default">
+        asds
+      </Button>
       <Modal onClose={() => setChecked(false)} sx={{}} show={checked}>
         <div style={{ width: 100, height: 100, background: "red" }}>asda</div>
       </Modal>
+      <Tabs
+        value={checkedd}
+        onChange={(e) => {
+          setCheckedd(e);
+          console.log(e);
+        }}
+        tabs={["1", "2", "3", "s"]}
+      >
+        <div>a</div>
+        <div>v</div>
+        <div>e</div>
+      </Tabs>
     </UnixThemeProvider>
   );
 }

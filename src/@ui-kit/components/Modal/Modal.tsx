@@ -1,5 +1,4 @@
 import React from "react";
-import { useClickAway } from "@uidotdev/usehooks";
 import { TransitionProps } from "../Transition/@types";
 import { Transition } from "../Transition/Transition";
 import { safeObj } from "../../../utils/safeObj";
@@ -43,7 +42,7 @@ const Modal = (props: ModalProps) => {
           opacity: 0,
         }}
         {...backdropRest}
-      />{" "}
+      />
       <Transition
         sx={{
           overflowY: "auto",

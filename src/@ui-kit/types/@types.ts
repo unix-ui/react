@@ -1,9 +1,10 @@
 import { CSSObject } from "@emotion/react";
-import { T_WITH_NO_DEFAULT_STYLE } from "../../@types/@types";
 import { ButtonTheme } from "./@button";
 import { ColorShades } from "./@colors";
 import { CheckboxTheme } from "./@checkbox";
-import { DatepickerProps } from "../components/Datepickers";
+import { DatePickerTheme } from "./@datepicker";
+import { TabsProps } from "../components/Tabs/@types";
+import { T_WITH_NO_DEFAULT_STYLE, T_WITH_NO_THEME } from "../../@types/@types";
 
 export type SxProps = CSSObject;
 
@@ -24,15 +25,12 @@ export type ThemeProps = {
 
       Button?: ButtonTheme;
       Checkbox?: CheckboxTheme;
-      Datepicker?: {
-        defaultProps?: DatepickerProps;
+      Datepicker?: DatePickerTheme;
+      Tabs?: {
+        defaultProps?: TabsProps;
         overrideStyles?: T_WITH_NO_DEFAULT_STYLE<{
-          dateButtons?: SxProps;
-          currentMonthButtonsSx?: SxProps;
-          nextMonthButtonsSx?: SxProps;
-          prevMonthButtonsSx?: SxProps;
-          currentDateSx?: SxProps;
-          activeDateStyle?: SxProps;
+          styles?: SxProps;
+          indicator?: T_WITH_NO_DEFAULT_STYLE<{ styles: SxProps }>;
         }>;
       };
       globalStyles?: SxProps;

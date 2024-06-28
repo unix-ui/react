@@ -45,7 +45,6 @@ const SelectComp = <T extends unknown[]>(
   } = props;
 
   const { sx: transitionSx, ...restTransition } = safeObj(transitionProps);
-
   const ref = useClickAway<HTMLDivElement>(() => setShow(false));
 
   useImperativeHandle(_ref, () => ref.current);
@@ -105,14 +104,22 @@ const SelectComp = <T extends unknown[]>(
         }}
       >
         {options?.map((item, i) => {
+          const el = itemRenderer ? itemRenderer(item) : <></>;
+
           return (
-            <Fragment key={"venux-ui-select-" + i}>
+            <Fragment key={"unix-ui-select-" + i}>
               {itemRenderer ? (
-                modifiedItemRenderer(
-                  itemRenderer,
-                  item,
-                  activeOn ? activeOn(item) : value === item
-                )
+                {
+                  ...safeObj(el),
+                  props: {
+                    onClick(e) {
+                      el.props.onClick && el.props.onClick(e);
+                      e.stopPropagation();
+                    },
+                    "data-active": activeOn ? activeOn(item) : value === item,
+                    ...safeObj(el.props),
+                  },
+                }
               ) : (
                 <SelectItem_
                   colorScheme={colorScheme}
