@@ -4,7 +4,7 @@ import { ColorShades } from "./@colors";
 import { CheckboxTheme } from "./@checkbox";
 import { DatePickerTheme } from "./@datepicker";
 import { TabsProps } from "../components/Tabs/@types";
-import { T_WITH_NO_DEFAULT_STYLE, T_WITH_NO_THEME } from "../../@types/@types";
+import { T_WITH_NO_DEFAULT_STYLE } from "../../@types/@types";
 
 export type SxProps = CSSObject;
 

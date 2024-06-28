@@ -3,11 +3,11 @@ import { glob } from "glob";
 import fs from "fs-extra";
 import path from "path";
 const entries = glob.sync("src/@ui-kit/**/index.ts").reduce((acc, path) => {
-  const name = [...acc] as string[];
-  name.push(path.split("\\").join("/"));
+  const _a = path.split("\\").slice(-2);
 
-  return name as any;
-}, []);
+  acc[_a[0] === "@ui-kit" ? "index" : _a[0] + "/index"] = path;
+  return acc as any;
+}, {});
 
 export default defineConfig({
   entry: entries,
@@ -22,44 +22,25 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   target: "es2020",
   async onSuccess() {
-    fs.copyFile(
-      path.join(__dirname, "src/global.d.ts"),
-      path.join(__dirname, "./dist/global.d.ts")
-    );
-    const exp = {
-      ".": {
-        import: "./dist/index.js",
-        types: "./dist/index.d.ts",
-      },
-    };
-    let dirs = await fs.readdir(path.join(__dirname, "./dist"));
+    const exp = {};
     const packages = JSON.parse(
       fs.readFileSync(path.join(__dirname, "./package.json"), "utf-8")
     );
 
-    dirs = dirs.filter((e) => !e.endsWith(".js") && !e.endsWith(".ts"));
-    for (let i = 0; i < dirs.length; i++) {
-      const el = dirs[i];
-      const folder = await fs.readdir(path.join(__dirname, "./dist", el));
-      folder.forEach(async (_a) => {
-        if (_a.includes("index.js")) {
-          const _p = `./dist/${el}/`;
-          exp["./" + el] = {
-            import: _p + "index.js",
-            types: _p + "index.d.ts",
-          };
-        } else {
-          (await fs.readdir(path.join(__dirname, "./dist", el, _a))).forEach(
-            () => {
-              const _p = `./dist/${el}/${_a}/`;
-              exp["./" + _a] = {
-                import: _p + "index.js",
-                types: _p + "index.d.ts",
-              };
-            }
-          );
-        }
-      });
+    for (const key in entries) {
+      const _k = key.split("/").reverse();
+      _k[0] = ".";
+      exp[_k.join("/")] = {
+        import: entries[key]
+          .split("\\")
+          .join("/")
+          .replace("src/@ui-kit", "./dist"),
+        types: entries[key]
+          .split("\\")
+          .join("/")
+          .replace("src/@ui-kit", "./dist")
+          .replace("index.ts", "index.d.ts"),
+      };
     }
     packages.exports = exp;
     fs.writeFileSync(
@@ -67,4 +48,14 @@ export default defineConfig({
       JSON.stringify(packages)
     );
   },
+});
+
+process.on("beforeExit", (code) => {
+  if (code === 0) {
+    fs.copyFile(
+      path.join(__dirname, "src/global.d.ts"),
+      path.join(__dirname, "./dist/global.d.ts")
+    );
+    process.exit();
+  }
 });

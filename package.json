@@ -10,9 +10,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "tsup",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "copy": "ts-node copy.ts",
+    "build": "tsup"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -24,80 +23,81 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.js",
+      "import": "./dist/index.ts",
       "types": "./dist/index.d.ts"
     },
-    "./colors": {
-      "import": "./dist/colors/index.js",
-      "types": "./dist/colors/index.d.ts"
+    "./utils": {
+      "import": "./dist/utils/index.ts",
+      "types": "./dist/utils/index.d.ts"
     },
-    "./Checkbox": {
-      "import": "./dist/components/Checkbox/index.js",
-      "types": "./dist/components/Checkbox/index.d.ts"
-    },
-    "./Button": {
-      "import": "./dist/components/Button/index.js",
-      "types": "./dist/components/Button/index.d.ts"
-    },
-    "./Drawer": {
-      "import": "./dist/components/Drawer/index.js",
-      "types": "./dist/components/Drawer/index.d.ts"
-    },
-    "./Layouts": {
-      "import": "./dist/components/Layouts/index.js",
-      "types": "./dist/components/Layouts/index.d.ts"
-    },
-    "./Datepickers": {
-      "import": "./dist/components/Datepickers/index.js",
-      "types": "./dist/components/Datepickers/index.d.ts"
-    },
-    "./LoadingIcon": {
-      "import": "./dist/components/LoadingIcon/index.js",
-      "types": "./dist/components/LoadingIcon/index.d.ts"
-    },
-    "./Modal": {
-      "import": "./dist/components/Modal/index.js",
-      "types": "./dist/components/Modal/index.d.ts"
-    },
-    "./Popover": {
-      "import": "./dist/components/Popover/index.js",
-      "types": "./dist/components/Popover/index.d.ts"
-    },
-    "./RippleBase": {
-      "import": "./dist/components/RippleBase/index.js",
-      "types": "./dist/components/RippleBase/index.d.ts"
-    },
-    "./Select": {
-      "import": "./dist/components/Select/index.js",
-      "types": "./dist/components/Select/index.d.ts"
-    },
-    "./TabPanel": {
-      "import": "./dist/components/TabPanel/index.js",
-      "types": "./dist/components/TabPanel/index.d.ts"
-    },
-    "./Tabs": {
-      "import": "./dist/components/Tabs/index.js",
-      "types": "./dist/components/Tabs/index.d.ts"
+    "./types": {
+      "import": "./dist/types/index.ts",
+      "types": "./dist/types/index.d.ts"
     },
     "./hooks": {
-      "import": "./dist/hooks/index.js",
+      "import": "./dist/hooks/index.ts",
       "types": "./dist/hooks/index.d.ts"
     },
     "./Transition": {
-      "import": "./dist/components/Transition/index.js",
+      "import": "./dist/components/Transition/index.ts",
       "types": "./dist/components/Transition/index.d.ts"
     },
-    "./types": {
-      "import": "./dist/types/index.js",
-      "types": "./dist/types/index.d.ts"
+    "./Tabs": {
+      "import": "./dist/components/Tabs/index.ts",
+      "types": "./dist/components/Tabs/index.d.ts"
     },
-    "./utils": {
-      "import": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
+    "./TabPanel": {
+      "import": "./dist/components/TabPanel/index.ts",
+      "types": "./dist/components/TabPanel/index.d.ts"
+    },
+    "./Select": {
+      "import": "./dist/components/Select/index.ts",
+      "types": "./dist/components/Select/index.d.ts"
+    },
+    "./RippleBase": {
+      "import": "./dist/components/RippleBase/index.ts",
+      "types": "./dist/components/RippleBase/index.d.ts"
+    },
+    "./Popover": {
+      "import": "./dist/components/Popover/index.ts",
+      "types": "./dist/components/Popover/index.d.ts"
+    },
+    "./Modal": {
+      "import": "./dist/components/Modal/index.ts",
+      "types": "./dist/components/Modal/index.d.ts"
+    },
+    "./LoadingIcon": {
+      "import": "./dist/components/LoadingIcon/index.ts",
+      "types": "./dist/components/LoadingIcon/index.d.ts"
+    },
+    "./Layouts": {
+      "import": "./dist/components/Layouts/index.ts",
+      "types": "./dist/components/Layouts/index.d.ts"
+    },
+    "./Drawer": {
+      "import": "./dist/components/Drawer/index.ts",
+      "types": "./dist/components/Drawer/index.d.ts"
+    },
+    "./Datepickers": {
+      "import": "./dist/components/Datepickers/index.ts",
+      "types": "./dist/components/Datepickers/index.d.ts"
+    },
+    "./Checkbox": {
+      "import": "./dist/components/Checkbox/index.ts",
+      "types": "./dist/components/Checkbox/index.d.ts"
+    },
+    "./Button": {
+      "import": "./dist/components/Button/index.ts",
+      "types": "./dist/components/Button/index.d.ts"
+    },
+    "./colors": {
+      "import": "./dist/colors/index.ts",
+      "types": "./dist/colors/index.d.ts"
     }
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
+    "@types/glob": "^8.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
@@ -108,7 +108,7 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "fs-extra": "^11.2.0",
     "path": "^0.12.7",
-    "tsup": "^8.1.0",
+    "tsup": "6.6.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   }
