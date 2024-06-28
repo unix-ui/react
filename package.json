@@ -1,6 +1,6 @@
 {
   "name": "@unix-ui/react",
-  "version": "1.0.5-pre-alpha",
+  "version": "1.0.6-pre-alpha",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
