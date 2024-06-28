@@ -14,7 +14,24 @@ function App() {
       theme={{
         currentTheme: "light",
         theme: {
-          light: {},
+          light: {
+            Button: {
+              defaultProps: { all: {} },
+              overrideStyles: {
+                default: {
+                  button: {
+                    styles: { backgroundColor: "red" },
+                    removeDefaultStyling: true,
+                  },
+                },
+                new_variant: {
+                  button: {
+                    styles: { backgroundColor: "red" },
+                  },
+                },
+              },
+            },
+          },
         },
       }}
     >
@@ -42,7 +59,7 @@ function App() {
         inputRenderer={<input />}
       />
 
-      <Button>asds</Button>
+      <Button variant="default">asds</Button>
       <Drawer
         onClose={() => setChecked(false)}
         position="left"

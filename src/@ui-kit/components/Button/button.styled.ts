@@ -54,102 +54,21 @@ const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
     };
   },
 
-  // overrides
-  ({ theme, ...props }) => {
-    const overrideStyles =
-      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
-        props.variant!
-      ];
-
-    return safeCssObj(overrideStyles?.button?.styles);
-  },
-
-  // size
-  ({ theme, ...props }) => {
-    const sizes =
-      theme?.theme?.[theme.currentTheme]?.Button?.sizes?.[props.size || ""];
-    if ((sizes as any)?.removeDefaultStyling) return {};
-    switch (props.size) {
-      case "xs":
-        return {
-          paddingTop: unit.remSpacing(1),
-          paddingBottom: unit.remSpacing(1),
-          paddingLeft: unit.remSpacing(3),
-          paddingRight: unit.remSpacing(3),
-          borderRadius: unit.remSpacing(1),
-          fontSize: 12,
-        };
-      case "sm":
-        return {
-          paddingTop: unit.remSpacing(2),
-          paddingBottom: unit.remSpacing(2),
-          paddingLeft: unit.remSpacing(4),
-          paddingRight: unit.remSpacing(4),
-          borderRadius: unit.remSpacing(1.5),
-          fontSize: 14,
-        };
-      case "md":
-        return {
-          paddingTop: unit.remSpacing(3),
-          paddingBottom: unit.remSpacing(3),
-          paddingLeft: unit.remSpacing(6),
-          paddingRight: unit.remSpacing(6),
-          borderRadius: unit.remSpacing(2),
-          fontSize: 14,
-        };
-      case "lg":
-        return {
-          paddingTop: unit.remSpacing(4),
-          paddingBottom: unit.remSpacing(4),
-          paddingLeft: unit.remSpacing(7),
-          paddingRight: unit.remSpacing(7),
-          borderRadius: unit.remSpacing(2),
-          fontSize: 14,
-        };
-      case "xl":
-        return {
-          paddingTop: unit.remSpacing(5),
-          paddingBottom: unit.remSpacing(5),
-          paddingLeft: unit.remSpacing(9),
-          paddingRight: unit.remSpacing(9),
-          borderRadius: unit.remSpacing(2),
-          fontSize: 16,
-        };
-
-      default:
-        break;
-    }
-  },
-  ({ theme, ...props }) =>
-    safeCssObj(
-      theme?.theme?.[theme.currentTheme]?.Button?.sizes?.[props.size || ""]
-        ?.styles
-    ),
-
-  // disabled
-  ({ theme, ...props }) => {
-    const overrideStyles =
-      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
-        props.variant!
-      ];
-
-    return safeCssObj(overrideStyles?.disabled?.styles);
-  },
-  (props) => {
-    return safeCssObj(
-      props.disabled && {
-        pointerEvents: "none",
-        opacity: 0.5,
-        ...safeCssObj(props.disabledSx),
-      }
-    );
-  },
-
   // color
   ({ theme, ...props }) => {
     const color =
       theme?.theme?.[theme.currentTheme]?.colors?.[props.colorScheme || ""] ||
       colors[props.colorScheme || ""];
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
+        props.variant!
+      ];
+    if (
+      overrideStyles?.removeDefaultStyling ||
+      props.noDefaultStyling ||
+      overrideStyles?.button?.removeDefaultStyling
+    )
+      return {};
 
     switch (props.variant) {
       case "default":
@@ -187,6 +106,125 @@ const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
         return;
     }
   },
+  // overrides
+  ({ theme }) => {
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.all;
+
+    return safeCssObj(overrideStyles?.button?.styles);
+  },
+
+  ({ theme, ...props }) => {
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
+        props.variant!
+      ];
+
+    return safeCssObj(overrideStyles?.button?.styles);
+  },
+
+  // size
+  ({ theme, ...props }) => {
+    const sizes =
+      theme?.theme?.[theme.currentTheme]?.Button?.sizes?.[props.size || ""];
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
+        props.variant!
+      ];
+    if (
+      (sizes as any)?.removeDefaultStyling ||
+      overrideStyles?.removeDefaultStyling ||
+      props.noDefaultStyling ||
+      overrideStyles?.button?.removeDefaultStyling
+    )
+      return {};
+    else
+      switch (props.size) {
+        case "xs":
+          return {
+            paddingTop: unit.remSpacing(1),
+            paddingBottom: unit.remSpacing(1),
+            paddingLeft: unit.remSpacing(3),
+            paddingRight: unit.remSpacing(3),
+            borderRadius: unit.remSpacing(1),
+            fontSize: 12,
+          };
+        case "sm":
+          return {
+            paddingTop: unit.remSpacing(2),
+            paddingBottom: unit.remSpacing(2),
+            paddingLeft: unit.remSpacing(4),
+            paddingRight: unit.remSpacing(4),
+            borderRadius: unit.remSpacing(1.5),
+            fontSize: 14,
+          };
+        case "md":
+          return {
+            paddingTop: unit.remSpacing(3),
+            paddingBottom: unit.remSpacing(3),
+            paddingLeft: unit.remSpacing(6),
+            paddingRight: unit.remSpacing(6),
+            borderRadius: unit.remSpacing(2),
+            fontSize: 14,
+          };
+        case "lg":
+          return {
+            paddingTop: unit.remSpacing(4),
+            paddingBottom: unit.remSpacing(4),
+            paddingLeft: unit.remSpacing(7),
+            paddingRight: unit.remSpacing(7),
+            borderRadius: unit.remSpacing(2),
+            fontSize: 14,
+          };
+        case "xl":
+          return {
+            paddingTop: unit.remSpacing(5),
+            paddingBottom: unit.remSpacing(5),
+            paddingLeft: unit.remSpacing(9),
+            paddingRight: unit.remSpacing(9),
+            borderRadius: unit.remSpacing(2),
+            fontSize: 16,
+          };
+
+        default:
+          break;
+      }
+  },
+  ({ theme, ...props }) =>
+    safeCssObj(
+      theme?.theme?.[theme.currentTheme]?.Button?.sizes?.[props.size || ""]
+        ?.styles
+    ),
+
+  // disabled
+  ({ theme, ...props }) => {
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
+        props.variant!
+      ];
+
+    return safeCssObj(overrideStyles?.disabled?.styles);
+  },
+  ({ theme, ...props }) => {
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
+        props.variant!
+      ];
+    if (
+      overrideStyles?.removeDefaultStyling ||
+      props.noDefaultStyling ||
+      overrideStyles?.disabled?.removeDefaultStyling
+    )
+      return {};
+    return safeCssObj(
+      props.disabled && {
+        pointerEvents: "none",
+        opacity: 0.5,
+        ...safeCssObj(props.disabledSx),
+      }
+    );
+  },
+
   // sx
   (props) => safeCssObj(props?.sx)
 );
@@ -226,6 +264,16 @@ const LoadingWrapper_ = styled.span<
     const color =
       theme?.theme?.[theme.currentTheme]?.colors?.[props.colorScheme || ""] ||
       colors[props.colorScheme || ""];
+    const overrideStyles =
+      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
+        props.variant!
+      ];
+    if (
+      overrideStyles?.removeDefaultStyling ||
+      props.noDefaultStyling ||
+      overrideStyles?.loading?.removeDefaultStyling
+    )
+      return {};
     if (props.variant === "outlined")
       return { color: color?.main, backgroundColor: "transparent" };
     return { color: "#374151", backgroundColor: "#D1D5DB" };

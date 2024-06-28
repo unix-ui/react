@@ -27,7 +27,7 @@ export type ButtonTheme = {
     [props: string]: Partial<ComponentProps<typeof Button_>> | undefined;
   };
   overrideStyles?: ButtonOverrideStylesOptions<
-    "default" | "outlined" | "ghost"
+    "all" | "default" | "outlined" | "ghost"
   > & {
     [props: string]: ButtonOverrideStyles | undefined;
   };
