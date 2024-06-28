@@ -26,7 +26,12 @@ export default defineConfig({
       path.join(__dirname, "src/global.d.ts"),
       path.join(__dirname, "./dist/global.d.ts")
     );
-    const exp = {};
+    const exp = {
+      ".": {
+        import: "./dist/index.js",
+        types: "./dist/index.d.ts",
+      },
+    };
     let dirs = await fs.readdir(path.join(__dirname, "./dist"));
     const packages = JSON.parse(
       fs.readFileSync(path.join(__dirname, "./package.json"), "utf-8")

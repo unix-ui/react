@@ -1,6 +1,6 @@
 {
   "name": "@unix-ui/react",
-  "version": "1.0.2-beta",
+  "version": "1.0.3-beta",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -24,6 +24,10 @@
     "react-dom": "^18.3.1"
   },
   "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
     "./colors": {
       "import": "./dist/colors/index.js",
       "types": "./dist/colors/index.d.ts"
@@ -32,21 +36,21 @@
       "import": "./dist/components/Button/index.js",
       "types": "./dist/components/Button/index.d.ts"
     },
-    "./Checkbox": {
-      "import": "./dist/components/Checkbox/index.js",
-      "types": "./dist/components/Checkbox/index.d.ts"
-    },
-    "./Layouts": {
-      "import": "./dist/components/Layouts/index.js",
-      "types": "./dist/components/Layouts/index.d.ts"
-    },
     "./Datepickers": {
       "import": "./dist/components/Datepickers/index.js",
       "types": "./dist/components/Datepickers/index.d.ts"
     },
+    "./Checkbox": {
+      "import": "./dist/components/Checkbox/index.js",
+      "types": "./dist/components/Checkbox/index.d.ts"
+    },
     "./Drawer": {
       "import": "./dist/components/Drawer/index.js",
       "types": "./dist/components/Drawer/index.d.ts"
+    },
+    "./Layouts": {
+      "import": "./dist/components/Layouts/index.js",
+      "types": "./dist/components/Layouts/index.d.ts"
     },
     "./LoadingIcon": {
       "import": "./dist/components/LoadingIcon/index.js",
@@ -60,13 +64,13 @@
       "import": "./dist/components/RippleBase/index.js",
       "types": "./dist/components/RippleBase/index.d.ts"
     },
-    "./Select": {
-      "import": "./dist/components/Select/index.js",
-      "types": "./dist/components/Select/index.d.ts"
-    },
     "./Transition": {
       "import": "./dist/components/Transition/index.js",
       "types": "./dist/components/Transition/index.d.ts"
+    },
+    "./Select": {
+      "import": "./dist/components/Select/index.js",
+      "types": "./dist/components/Select/index.d.ts"
     },
     "./hooks": {
       "import": "./dist/hooks/index.js",
