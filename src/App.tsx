@@ -6,6 +6,7 @@ import { Select } from "./@ui-kit/components/Select/Select";
 import { Datepicker } from "./@ui-kit/components/Datepickers/Datepicker";
 import { Button } from "./@ui-kit/components/Button";
 import Drawer from "./@ui-kit/components/Drawer/Drawer";
+import { Modal } from "./@ui-kit/components/Modal";
 
 function App() {
   const [checked, setChecked] = useState(false);
@@ -60,12 +61,9 @@ function App() {
       />
 
       <Button variant="default">asds</Button>
-      <Drawer
-        onClose={() => setChecked(false)}
-        position="left"
-        show={checked}
-        sx={{ width: "100vw", height: 100, background: "#f23" }}
-      ></Drawer>
+      <Modal onClose={() => setChecked(false)} sx={{}} show={checked}>
+        <div style={{ width: 100, height: 100, background: "red" }}>asda</div>
+      </Modal>
     </UnixThemeProvider>
   );
 }
