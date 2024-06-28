@@ -10,7 +10,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "copy": "ts-node copy.ts",
     "build": "tsup"
   },
   "dependencies": {
