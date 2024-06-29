@@ -30,6 +30,11 @@ const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
         props.variant!
       ];
 
+    const color =
+      theme?.theme?.[theme.currentTheme]?.colors?.[props.colorScheme || ""] ||
+      colors[props.colorScheme || ""];
+    const sizes =
+      theme?.theme?.[theme.currentTheme]?.Button?.sizes?.[props.size || ""];
     return {
       ...safeCssObjOn(
         overrideStyles?.removeDefaultStyling ||
@@ -49,78 +54,104 @@ const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
           fontWeight: 600,
           userSelect: "none",
           cursor: "pointer",
+          ...safeCssObj(
+            props.size === "xs" && {
+              paddingTop: unit.remSpacing(1),
+              paddingBottom: unit.remSpacing(1),
+              paddingLeft: unit.remSpacing(3),
+              paddingRight: unit.remSpacing(3),
+              borderRadius: unit.remSpacing(1),
+              fontSize: 12,
+            }
+          ),
+          ...safeCssObj(
+            props.size === "sm" && {
+              paddingTop: unit.remSpacing(2),
+              paddingBottom: unit.remSpacing(2),
+              paddingLeft: unit.remSpacing(4),
+              paddingRight: unit.remSpacing(4),
+              borderRadius: unit.remSpacing(1.5),
+              fontSize: 14,
+            }
+          ),
+          ...safeCssObj(
+            props.size === "md" && {
+              paddingTop: unit.remSpacing(3),
+              paddingBottom: unit.remSpacing(3),
+              paddingLeft: unit.remSpacing(6),
+              paddingRight: unit.remSpacing(6),
+              borderRadius: unit.remSpacing(2),
+              fontSize: 14,
+            }
+          ),
+          ...safeCssObj(
+            props.size === "lg" && {
+              paddingTop: unit.remSpacing(4),
+              paddingBottom: unit.remSpacing(4),
+              paddingLeft: unit.remSpacing(7),
+              paddingRight: unit.remSpacing(7),
+              borderRadius: unit.remSpacing(2),
+              fontSize: 14,
+            }
+          ),
+          ...safeCssObj(
+            props.size === "xl" && {
+              paddingTop: unit.remSpacing(5),
+              paddingBottom: unit.remSpacing(5),
+              paddingLeft: unit.remSpacing(9),
+              paddingRight: unit.remSpacing(9),
+              borderRadius: unit.remSpacing(2),
+              fontSize: 16,
+            }
+          ),
+          ...safeCssObj(
+            props.variant === "default" && {
+              backgroundColor: color?.main,
+              color: "#ffffff",
+              "&:hover": {
+                backgroundColor: color?.hover,
+              },
+            }
+          ),
+          ...safeCssObj(
+            props.variant === "ghost" && {
+              backgroundColor: "transparent",
+              color: "#2a2c2f",
+              "&:hover": {
+                backgroundColor: "#f0f0f1",
+              },
+            }
+          ),
+          ...safeCssObj(
+            props.variant === "outlined" &&
+              (props.isLoading
+                ? {
+                    color: "transparent",
+                    background: "transparent",
+                    boxShadow: `inset 0 0 0 1px ${color?.main}`,
+                  }
+                : {
+                    boxShadow: `inset 0 0 0 1px ${color?.main}`,
+                    color: color?.main,
+                    background: "transparent",
+                    "&:hover": {
+                      backgroundColor: alpha(color?.hover!, 0.1),
+                    },
+                  })
+          ),
         }
       ),
+
+      ...safeCssObj(overrideStyles?.button?.styles),
+      ...safeCssObj(overrideStyles?.button?.styles),
+      ...safeCssObj(props?.sx),
+      ...safeCssObj(overrideStyles?.disabled?.styles),
+
+      ...safeCssObj(
+        theme?.theme?.[theme.currentTheme]?.Button?.sizes?.[props.size || ""]
+          ?.styles
+      ),
     };
-  },
-
-  // color
-  ({ theme, ...props }) => {
-    const color =
-      theme?.theme?.[theme.currentTheme]?.colors?.[props.colorScheme || ""] ||
-      colors[props.colorScheme || ""];
-    const overrideStyles =
-      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
-        props.variant!
-      ];
-    if (
-      overrideStyles?.removeDefaultStyling ||
-      props.noDefaultStyling ||
-      overrideStyles?.button?.removeDefaultStyling
-    )
-      return {};
-
-    switch (props.variant) {
-      case "default":
-        return {
-          backgroundColor: color?.main,
-          color: "#ffffff",
-          "&:hover": {
-            backgroundColor: color?.hover,
-          },
-        };
-      case "ghost":
-        return {
-          backgroundColor: "transparent",
-          color: "#2a2c2f",
-          "&:hover": {
-            backgroundColor: "#f0f0f1",
-          },
-        };
-      case "outlined":
-        return props.isLoading
-          ? {
-              color: "transparent",
-              background: "transparent",
-              boxShadow: `inset 0 0 0 1px ${color?.main}`,
-            }
-          : {
-              boxShadow: `inset 0 0 0 1px ${color?.main}`,
-              color: color?.main,
-              background: "transparent",
-              "&:hover": {
-                backgroundColor: alpha(color?.hover!, 0.1),
-              },
-            };
-      default:
-        return;
-    }
-  },
-  // overrides
-  ({ theme }) => {
-    const overrideStyles =
-      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.all;
-
-    return safeCssObj(overrideStyles?.button?.styles);
-  },
-
-  ({ theme, ...props }) => {
-    const overrideStyles =
-      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
-        props.variant!
-      ];
-
-    return safeCssObj(overrideStyles?.button?.styles);
   },
 
   // size
@@ -138,73 +169,8 @@ const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
       overrideStyles?.button?.removeDefaultStyling
     )
       return {};
-    else
-      switch (props.size) {
-        case "xs":
-          return {
-            paddingTop: unit.remSpacing(1),
-            paddingBottom: unit.remSpacing(1),
-            paddingLeft: unit.remSpacing(3),
-            paddingRight: unit.remSpacing(3),
-            borderRadius: unit.remSpacing(1),
-            fontSize: 12,
-          };
-        case "sm":
-          return {
-            paddingTop: unit.remSpacing(2),
-            paddingBottom: unit.remSpacing(2),
-            paddingLeft: unit.remSpacing(4),
-            paddingRight: unit.remSpacing(4),
-            borderRadius: unit.remSpacing(1.5),
-            fontSize: 14,
-          };
-        case "md":
-          return {
-            paddingTop: unit.remSpacing(3),
-            paddingBottom: unit.remSpacing(3),
-            paddingLeft: unit.remSpacing(6),
-            paddingRight: unit.remSpacing(6),
-            borderRadius: unit.remSpacing(2),
-            fontSize: 14,
-          };
-        case "lg":
-          return {
-            paddingTop: unit.remSpacing(4),
-            paddingBottom: unit.remSpacing(4),
-            paddingLeft: unit.remSpacing(7),
-            paddingRight: unit.remSpacing(7),
-            borderRadius: unit.remSpacing(2),
-            fontSize: 14,
-          };
-        case "xl":
-          return {
-            paddingTop: unit.remSpacing(5),
-            paddingBottom: unit.remSpacing(5),
-            paddingLeft: unit.remSpacing(9),
-            paddingRight: unit.remSpacing(9),
-            borderRadius: unit.remSpacing(2),
-            fontSize: 16,
-          };
-
-        default:
-          break;
-      }
   },
-  ({ theme, ...props }) =>
-    safeCssObj(
-      theme?.theme?.[theme.currentTheme]?.Button?.sizes?.[props.size || ""]
-        ?.styles
-    ),
 
-  // disabled
-  ({ theme, ...props }) => {
-    const overrideStyles =
-      theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
-        props.variant!
-      ];
-
-    return safeCssObj(overrideStyles?.disabled?.styles);
-  },
   ({ theme, ...props }) => {
     const overrideStyles =
       theme?.theme?.[theme.currentTheme]?.Button?.overrideStyles?.[
@@ -223,10 +189,7 @@ const Button_ = styled.button<T_WITH_THEME<ButtonProps>>(
         ...safeCssObj(props.disabledSx),
       }
     );
-  },
-
-  // sx
-  (props) => safeCssObj(props?.sx)
+  }
 );
 
 const LoadingWrapper_ = styled.span<

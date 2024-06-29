@@ -1,6 +1,6 @@
 import React from "react";
 import { Transition } from "../Transition/Transition";
-import { safeObj } from "../../../utils/safeObj";
+import { safeCssObj, safeObj } from "../../../utils/safeObj";
 import { alpha } from "../../utils";
 import { DrawerProps } from "./@types";
 
@@ -50,10 +50,10 @@ const Drawer = ({ position = "right", ...props }: DrawerProps) => {
           overflowY: "auto",
           position: "fixed",
           [position]: "0",
-          height: "100vh",
           zIndex: 10000,
           width: "fit-content",
           ...safeObj(sx),
+          ...safeCssObj(position === "bottom" ? { bottom: 0 } : { top: 0 }),
         }}
         enteringStyle={{
           translate,

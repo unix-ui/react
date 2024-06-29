@@ -41,3 +41,6 @@ export type T_OVERRIDE_SX = {
 export type T_VARIANTS_THEME<T extends string> = {
   [K in T]?: T_OVERRIDE_SX;
 };
+export type T_WITH_SX<T> = T & {
+  sx?: SxProps;
+};

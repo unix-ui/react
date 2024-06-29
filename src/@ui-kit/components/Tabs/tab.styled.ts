@@ -36,6 +36,7 @@ export const Tabs_ = styled.div<T_WITH_THEME<TabsProps>>(
               alignItems: "center",
               width: "fit-content",
               borderRadius: unit.remSpacing(2),
+              "[data-unix-component=tab]": { position: "relative", zIndex: 2 },
               ...safeCssObj(props.sx),
             }
       ),

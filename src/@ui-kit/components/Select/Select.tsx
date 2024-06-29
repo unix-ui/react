@@ -86,6 +86,7 @@ const SelectComp = <T extends unknown[]>(
           zIndex: "9999",
           background: "#fff",
           padding: unit.spacing(0.5),
+          borderRadius: unit.rem(8),
           overflow: "auto",
           ...transitionSx,
         }}

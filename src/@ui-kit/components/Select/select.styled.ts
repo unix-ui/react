@@ -57,7 +57,7 @@ export const Select_ = styled.div<T_WITH_THEME<T_WITH_SCHEME<SelectProps>>>(
 export const SelectItem_ = styled.button<T_WITH_THEME<T_WITH_SCHEME<{}>>>(
   ({ theme, ...props }) => ({
     borderRadius: unit.remSpacing(1),
-    padding: unit.spacing(0.2, 0.4),
+    padding: unit.spacing(1, 4),
     fontSize: "13px",
     cursor: "pointer",
     transition: "all 150ms",

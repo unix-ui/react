@@ -15,6 +15,7 @@ import { safeCssObj, safeObj } from "../../../utils/safeObj";
 import { getColor } from "../../../utils/get";
 import { DatepickerProps } from "./@types";
 import { useTheme } from "../../hooks";
+import { _defaultDatepickerProps } from "./_default";
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
 const months = [
@@ -33,8 +34,8 @@ const months = [
 ];
 
 const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
-  (
-    {
+  (_props, ref) => {
+    const {
       calenderRenderer,
       controlsRenderer,
       currentMonthButtonsSx,
@@ -44,9 +45,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
       currentDateSx,
       dateButtonsSx,
       ...props
-    },
-    ref
-  ) => {
+    } = { ..._defaultDatepickerProps, ..._props };
     const [theme] = useTheme();
     const { value, onChange, ...rest } = props;
     const [date, setDate] = useState(value ? moment(value) : moment());

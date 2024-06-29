@@ -11,3 +11,4 @@ bun.lockb
 README.md
 vite.config.ts
 .eslintrc.cjs
+build

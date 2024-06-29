@@ -8,14 +8,17 @@ import { ThemeProps } from "../../types";
 import {
   T_STRING_GENER,
   T_WITH_NO_DEFAULT_STYLE,
+  T_WITH_SX,
   T_WITH_THEME,
 } from "../../../@types/@types";
 
 type CheckboxProps = T_WITH_NO_DEFAULT_STYLE<{
   size?: number;
-  labelProps?: Omit<HTMLAttributes<HTMLSpanElement>, "children">;
-  inputProps?: Omit<InputHTMLAttributes<HTMLInputElement>, "children">;
-  checkBoxProps?: HTMLAttributes<HTMLSpanElement>;
+  labelProps?: T_WITH_SX<Omit<HTMLAttributes<HTMLSpanElement>, "children">>;
+  inputProps?: T_WITH_SX<
+    Omit<InputHTMLAttributes<HTMLInputElement>, "children">
+  >;
+  checkBoxProps?: T_WITH_SX<HTMLAttributes<HTMLSpanElement>>;
   label?: string;
   iconSize?: number;
   checked?: boolean;
@@ -46,7 +49,11 @@ export const CheckboxButton_ = styled.button<T_WITH_THEME<CheckboxProps>>(
         (!props.noDefaultStyling ||
           theme?.theme?.[theme.currentTheme]?.Checkbox?.overrideStyles?.[
             props.variant || ""
-          ]?.removeDefaultStyling) && { pointerEvents: "none", opacity: 0.5 }
+          ]?.removeDefaultStyling) && {
+          pointerEvents: "none",
+          opacity: 0.5,
+          userSelect: "none",
+        }
     ),
   (props) => safeCssObj(props.sx),
   ({ theme, ...props }) =>
