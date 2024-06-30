@@ -101,4 +101,4 @@ function CheckIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export default Checkbox;
+export { Checkbox };

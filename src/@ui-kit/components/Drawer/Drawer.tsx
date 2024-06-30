@@ -74,4 +74,4 @@ const Drawer = ({ position = "right", ...props }: DrawerProps) => {
   );
 };
 
-export default Drawer;
+export { Drawer };

@@ -1,6 +1,6 @@
 {
   "name": "@unix-ui/react",
-  "version": "1.0.6-pre-alpha",
+  "version": "1.0.9-pre-alpha",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -90,6 +90,22 @@
     "./Button": {
       "import": "./dist/components/Button/index.ts",
       "types": "./dist/components/Button/index.d.ts"
+    },
+    "./AccordionItem": {
+      "import": "./dist/components/AccordionItem/index.ts",
+      "types": "./dist/components/AccordionItem/index.d.ts"
+    },
+    "./AccordionContent": {
+      "import": "./dist/components/AccordionContent/index.ts",
+      "types": "./dist/components/AccordionContent/index.d.ts"
+    },
+    "./AccordionButton": {
+      "import": "./dist/components/AccordionButton/index.ts",
+      "types": "./dist/components/AccordionButton/index.d.ts"
+    },
+    "./Accordion": {
+      "import": "./dist/components/Accordion/index.ts",
+      "types": "./dist/components/Accordion/index.d.ts"
     },
     "./colors": {
       "import": "./dist/colors/index.ts",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Checkbox from "./@ui-kit/components/Checkbox/Checkbox";
+import { Checkbox } from "./@ui-kit/components/Checkbox/Checkbox";
 import { UnixThemeProvider } from "./@ui-kit";
 import { Transition } from "./@ui-kit/components/Transition/Transition";
 import { Select } from "./@ui-kit/components/Select/Select";
@@ -7,10 +7,14 @@ import { Button } from "./@ui-kit/components/Button";
 import { Modal } from "./@ui-kit/components/Modal";
 import { Tabs } from "./@ui-kit/components/Tabs/Tabs";
 import { unit } from "./@ui-kit/utils";
-import Drawer from "./@ui-kit/components/Drawer/Drawer";
+import { Drawer } from "./@ui-kit/components/Drawer/Drawer";
 import clsx from "clsx";
 import RippleBase from "./@ui-kit/components/RippleBase/RippleBase";
 import { Datepicker } from "./@ui-kit/components/Datepickers";
+import { AccordionItem } from "./@ui-kit/components/AccordionItem/AccordionItem";
+import { AccordionButton } from "./@ui-kit/components/AccordionButton/AccordionButton";
+import { AccordionContent } from "./@ui-kit/components/AccordionContent/AccordionContent";
+import { Accordion } from "./@ui-kit/components/Accordion/Accordion";
 
 function App() {
   const [checked, setChecked] = useState(false);
@@ -47,7 +51,7 @@ function App() {
         },
       }}
     >
-      <div className="p-5 flex items-center justify-center flex-col">
+      {/* <div className="p-5 flex items-center justify-center flex-col">
         <h1 className="mb-4 font-semibold text-[30px]">
           This is my lazy a*s showcase here
         </h1>
@@ -345,7 +349,25 @@ function App() {
             );
           }}
         />
-      </div>
+      </div> */}
+      {/* <Button as= ></Button> */}
+      <Accordion>
+        <AccordionItem>
+          <AccordionButton as={Button}>
+            {({ open }) => `${open}`}
+          </AccordionButton>
+          <AccordionContent>
+            <div>1</div>
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton as={Button}>Hello</AccordionButton>
+          <AccordionContent>
+            <div>2</div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      <Datepicker></Datepicker>
     </UnixThemeProvider>
   );
 }

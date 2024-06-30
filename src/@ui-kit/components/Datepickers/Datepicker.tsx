@@ -49,6 +49,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
     const [theme] = useTheme();
     const { value, onChange, ...rest } = props;
     const [date, setDate] = useState(value ? moment(value) : moment());
+    const [_date, _setDate] = useState(value ? moment(value) : moment());
     const [daysInMonth, setDaysInMonth] = useState<number[]>([]);
     const [daysInPrevMonth, setDaysInPrevMonth] = useState<number[]>([]);
     const [daysInNextMonth, setDaysInNextMonth] = useState<number[]>([]);
@@ -57,7 +58,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
       theme?.theme?.[theme.currentTheme]?.Datepicker?.overrideStyles
     );
     useEffect(() => {
-      const currentMonth = date.clone().startOf("month");
+      const currentMonth = _date.clone().startOf("month");
       const prevMonth = currentMonth.clone().subtract({ month: 1 });
       const daysInCurrentMonth = Array.from(
         { length: currentMonth.daysInMonth() },
@@ -77,37 +78,37 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
       setDaysInMonth(daysInCurrentMonth);
       setDaysInPrevMonth(daysInPreviousMonth);
       setDaysInNextMonth(daysInNextMonthArray);
-    }, [date]);
+    }, [_date]);
 
     function handleClick(e: Moment) {
       onChange && onChange(e);
       !e.isSame(date) && setDate(e);
+      _setDate(e);
     }
 
     function handleYearChange(e: number) {
       const _a = date.clone().set({ year: e });
-      !date.isSame(_a) && setDate(_a);
+      _setDate(_a);
     }
 
     const handleMonthChange = (i: number): void => {
-      console.log(i);
       const _a = date.clone().set({ month: i });
-      !date.isSame(_a) && setDate(_a);
+      _setDate(_a);
     };
     const handlePrevMonth = () =>
-      setDate((p) => p.clone().subtract({ month: 1 }));
+      _setDate((p) => p.clone().subtract({ month: 1 }));
 
-    const handleNextMonth = () => setDate((p) => p.clone().add({ month: 1 }));
+    const handleNextMonth = () => _setDate((p) => p.clone().add({ month: 1 }));
 
-    const handleDateClickPrevMonth = (_date: number) => {
-      handleClick(date.clone().subtract({ month: 1 }).set({ date: _date }));
+    const handleDateClickPrevMonth = (_dt: number) => {
+      handleClick(_date.clone().subtract({ month: 1 }).set({ date: _dt }));
     };
 
-    const handleDateClickCurrentMonth = (_date: number) =>
-      handleClick(date.clone().set({ date: _date }));
+    const handleDateClickCurrentMonth = (_dt: number) =>
+      handleClick(_date.clone().set({ date: _dt }));
 
-    const handleDateClickNextMonth = (_date: number) => {
-      handleClick(date.clone().add({ month: 1 }).set({ date: _date }));
+    const handleDateClickNextMonth = (_dt: number) => {
+      handleClick(_date.clone().add({ month: 1 }).set({ date: _dt }));
     };
     return (
       <DatePicker_ ref={ref} {...rest}>
@@ -138,10 +139,10 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
               <DatePickerButtons_>
                 <Select
                   colorScheme={props.colorScheme}
-                  value={months[date.get("month")]}
+                  value={months[_date.get("month")]}
                   inputRenderer={
                     <RippleBase rippleColor="#4b5563" sx={_inputDaysSx}>
-                      <span>{date.format("MMM")}</span>
+                      <span>{_date.format("MMM")}</span>
                     </RippleBase>
                   }
                   onChange={(_, i) => handleMonthChange(i)}
@@ -151,10 +152,10 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
                 />
                 <Select
                   colorScheme={props.colorScheme}
-                  value={date.get("year")}
+                  value={_date.get("year")}
                   inputRenderer={
                     <RippleBase rippleColor="#4b5563" sx={{ ..._inputDaysSx }}>
-                      <span>{date.get("year")}</span>
+                      <span>{_date.get("year")}</span>
                     </RippleBase>
                   }
                   onChange={handleYearChange}
@@ -239,11 +240,11 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
                 </RippleBase>
               ))}
 
-              {daysInMonth.map((_date, i) => (
+              {daysInMonth.map((_dt, i) => (
                 <RippleBase
                   key={`curr-${i}`}
                   rippleColor={"#fff"}
-                  onClick={() => handleDateClickCurrentMonth(_date)}
+                  onClick={() => handleDateClickCurrentMonth(_dt)}
                   sx={{
                     ..._dateButtonSx,
                     ...safeCssObj(overrideStyles.dateButtons),
@@ -251,7 +252,11 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
                     ...safeCssObj(dateButtonsSx),
                     ...safeCssObj(currentMonthButtonsSx),
                     ...safeCssObj(
-                      moment().isSame(moment().set({ date: _date })) && {
+                      moment().format("DD/MM/YYYY") ===
+                        _date
+                          .clone()
+                          .set({ date: _dt })
+                          .format("DD/MM/YYYY") && {
                         boxShadow: "inset 0 0 0 1px " + themeColor?.main,
                         ...safeCssObj(currentDateSx),
                         ...safeCssObj(overrideStyles.currentDateSx),
@@ -261,7 +266,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
                   style={
                     {
                       ...safeCssObj(
-                        date.isSame(date.clone().set({ date: _date })) && {
+                        _date.isSame(date.clone().set({ date: _dt })) && {
                           background: getColor(theme, props.colorScheme)?.main,
                           color: "#fff",
                           ...safeCssObj(activeDateStyle),
@@ -271,7 +276,7 @@ const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
                     } as CSSProperties
                   }
                 >
-                  {_date}
+                  {_dt}
                 </RippleBase>
               ))}
 

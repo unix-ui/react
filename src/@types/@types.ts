@@ -1,3 +1,4 @@
+import { ElementType } from "react";
 import { colors } from "../@ui-kit/colors";
 import { SxProps, RipplesAttr, ThemeProps } from "../@ui-kit/types/@types";
 
@@ -43,4 +44,8 @@ export type T_VARIANTS_THEME<T extends string> = {
 };
 export type T_WITH_SX<T> = T & {
   sx?: SxProps;
+};
+
+export type T_WITH_AS<T> = T & {
+  as?: ElementType<any, keyof JSX.IntrinsicElements>;
 };
