@@ -1,6 +1,6 @@
 {
   "name": "@unix-ui/react",
-  "version": "1.0.9-pre-alpha",
+  "version": "1.1.0-pre-alpha",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -90,6 +90,14 @@
     "./Button": {
       "import": "./dist/components/Button/index.ts",
       "types": "./dist/components/Button/index.d.ts"
+    },
+    "./AvatarGroup": {
+      "import": "./dist/components/AvatarGroup/index.ts",
+      "types": "./dist/components/AvatarGroup/index.d.ts"
+    },
+    "./Avatar": {
+      "import": "./dist/components/Avatar/index.ts",
+      "types": "./dist/components/Avatar/index.d.ts"
     },
     "./AccordionItem": {
       "import": "./dist/components/AccordionItem/index.ts",

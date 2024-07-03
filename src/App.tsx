@@ -15,6 +15,8 @@ import { AccordionItem } from "./@ui-kit/components/AccordionItem/AccordionItem"
 import { AccordionButton } from "./@ui-kit/components/AccordionButton/AccordionButton";
 import { AccordionContent } from "./@ui-kit/components/AccordionContent/AccordionContent";
 import { Accordion } from "./@ui-kit/components/Accordion/Accordion";
+import { AvatarGroup } from "./@ui-kit/components/AvatarGroup/AvatarGroup";
+import { Avatar } from "./@ui-kit/components/Avatar/Avatar";
 
 function App() {
   const [checked, setChecked] = useState(false);
@@ -368,6 +370,11 @@ function App() {
         </AccordionItem>
       </Accordion>
       <Datepicker></Datepicker>
+      <AvatarGroup>
+        <Avatar />
+        <Avatar />
+        <Avatar />
+      </AvatarGroup>
     </UnixThemeProvider>
   );
 }
