@@ -7,23 +7,6 @@ import { unit } from "../../utils/units";
 import { _defaultSelectProps } from "./_default";
 import Popover from "../Popover/Popover";
 
-function modifiedItemRenderer(
-  itemRenderer: Exclude<SelectProps["itemRenderer"], undefined>,
-  item: unknown,
-  active: boolean
-) {
-  const _item = itemRenderer(item);
-  return React.cloneElement<
-    React.HtmlHTMLAttributes<HTMLElement> & { "data-active": boolean }
-  >(_item, {
-    onClick(e) {
-      _item.props.onClick && _item.props.onClick(e);
-      e.stopPropagation();
-    },
-    "data-active": active,
-  });
-}
-
 const SelectComp = <T extends unknown[]>(
   _props: SelectProps<T, T[0]>,
   _ref: React.ForwardedRef<HTMLDivElement>

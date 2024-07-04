@@ -1,31 +1,36 @@
-import { useState } from "react";
-import { Checkbox } from "./@ui-kit/components/Checkbox/Checkbox";
+// import { useState } from "react";
+// import { Checkbox } from "./@ui-kit/components/Checkbox/Checkbox";
 import { UnixThemeProvider } from "./@ui-kit";
-import { Transition } from "./@ui-kit/components/Transition/Transition";
-import { Select } from "./@ui-kit/components/Select/Select";
+// import { Transition } from "./@ui-kit/components/Transition/Transition";
+// import { Select } from "./@ui-kit/components/Select/Select";
 import { Button } from "./@ui-kit/components/Button";
-import { Modal } from "./@ui-kit/components/Modal";
-import { Tabs } from "./@ui-kit/components/Tabs/Tabs";
+// import { Modal } from "./@ui-kit/components/Modal";
+// import { Tabs } from "./@ui-kit/components/Tabs/Tabs";
 import { unit } from "./@ui-kit/utils";
-import { Drawer } from "./@ui-kit/components/Drawer/Drawer";
-import clsx from "clsx";
-import RippleBase from "./@ui-kit/components/RippleBase/RippleBase";
-import { Datepicker } from "./@ui-kit/components/Datepickers";
+// import { Drawer } from "./@ui-kit/components/Drawer/Drawer";
+// import clsx from "clsx";
+// import RippleBase from "./@ui-kit/components/RippleBase/RippleBase";
+import { Datepicker } from "./@ui-kit/components/Datepicker";
 import { AccordionItem } from "./@ui-kit/components/AccordionItem/AccordionItem";
 import { AccordionButton } from "./@ui-kit/components/AccordionButton/AccordionButton";
 import { AccordionContent } from "./@ui-kit/components/AccordionContent/AccordionContent";
 import { Accordion } from "./@ui-kit/components/Accordion/Accordion";
 import { AvatarGroup } from "./@ui-kit/components/AvatarGroup/AvatarGroup";
 import { Avatar } from "./@ui-kit/components/Avatar/Avatar";
+import { Center } from "./@ui-kit/components/Layouts";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
-  const [checked, setChecked] = useState(false);
-  const [tabs, setTabs] = useState(2);
-  const [trans, setTrans] = useState(false);
-  const [select, setSelect] = useState("Option 1");
-  const [modal, setModal] = useState(false);
-  const [drawer, setDrawer] = useState("right");
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  // const [checked, setChecked] = useState(false);
+  // const [tabs, setTabs] = useState(2);
+  // const [trans, setTrans] = useState(false);
+  const [select, setSelect] = useState(
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s"
+  );
+  // const [modal, setModal] = useState(false);
+  // const [drawer, setDrawer] = useState("right");
+  // const [drawerOpen, setDrawerOpen] = useState(false);
   return (
     <UnixThemeProvider
       theme={{
@@ -370,8 +375,8 @@ function App() {
         </AccordionItem>
       </Accordion>
       <Datepicker></Datepicker>
-      <AvatarGroup>
-        <Avatar />
+      <AvatarGroup expandOnHover size={50}>
+        <Avatar src={select} name="Arif arid" />
         <Avatar />
         <Avatar />
       </AvatarGroup>

@@ -1,6 +1,6 @@
 import { SxProps } from ".";
 import { T_WITH_NO_DEFAULT_STYLE } from "../../@types/@types";
-import { DatepickerProps } from "../components/Datepickers";
+import { DatepickerProps } from "../components/Datepicker";
 
 export type DatePickerTheme = {
   defaultProps?: DatepickerProps;

@@ -13,7 +13,7 @@ type ColorsGen<T extends string> = {
 };
 
 export type Colors = Partial<
-  ColorsGen<"primary" | "red" | "green" | "orange" | "blue">
+  ColorsGen<"primary" | "red" | "green" | "orange" | "blue" | "gray" | "slate">
 > & { [props: string & {}]: Partial<ColorShades> };
 
 export type ThemeProps = {
