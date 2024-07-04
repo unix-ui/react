@@ -1,3 +1,4 @@
+"use client";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { LoadingIcon } from "../LoadingIcon/LoadingIcon";
 import { useRipple } from "../../hooks/useRipple";

@@ -19,3 +19,4 @@ tailwind.config.js
 tsconfig.node.tsbuildinfo
 netlify.toml
 vite.config.d.ts
+.vscode

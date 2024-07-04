@@ -1,3 +1,4 @@
+"use client";
 import styled from "@emotion/styled";
 import { safeCssObj } from "../../../utils/safeObj";
 import { SxProps } from "../../types";

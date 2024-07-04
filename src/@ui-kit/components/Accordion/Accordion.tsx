@@ -1,3 +1,4 @@
+"use client";
 import React, { PropsWithChildren } from "react";
 
 export type AccordionProps = PropsWithChildren<{ collapseOthers?: boolean }>;

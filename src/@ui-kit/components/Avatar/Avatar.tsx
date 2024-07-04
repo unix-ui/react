@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Avatar_ } from "./avatar.styled";
 import { AvatarProps } from "./@types";
@@ -17,7 +18,7 @@ const Avatar = (props: AvatarProps) => {
       children: show ? (
         fallbackElement || (
           <AvatarFallback data-unix-component="avatar">
-            {_name ? _name[0][0] + _name[_name.length - 1][0] : "UI"}
+            {_name ? _name[0][0] + _name[_name.length - 1][0] : "N/A"}
           </AvatarFallback>
         )
       ) : (

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { AvatarGroup_ } from "./avatar-group.styled";
 import { toArray } from "../../../utils/toArray";

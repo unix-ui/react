@@ -1,3 +1,4 @@
+"use client";
 import React, { forwardRef, SVGProps, useRef } from "react";
 import { CheckboxProps } from "./@types";
 import { safeObj } from "../../../utils/safeObj";

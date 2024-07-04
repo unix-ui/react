@@ -1,3 +1,4 @@
+"use client";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { TransitionProps } from "./@types";
 import { Transition_ } from "./transition.styled";

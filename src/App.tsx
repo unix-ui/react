@@ -20,6 +20,8 @@ import { Avatar } from "./@ui-kit/components/Avatar/Avatar";
 import { Center } from "./@ui-kit/components/Layouts";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Kbd } from "./@ui-kit/components/Kbd/kbd.styled";
+import { KbdChain } from "./@ui-kit/components/KbdChain/KbdChain";
 
 function App() {
   // const [checked, setChecked] = useState(false);
@@ -380,6 +382,8 @@ function App() {
         <Avatar />
         <Avatar />
       </AvatarGroup>
+      <Kbd>shift</Kbd>
+      <KbdChain separatorElement={"+"} chain={["shift", "H"]} />
     </UnixThemeProvider>
   );
 }

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { TransitionProps } from "../Transition/@types";
 import { Transition } from "../Transition/Transition";

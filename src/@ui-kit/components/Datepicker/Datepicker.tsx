@@ -1,6 +1,7 @@
+"use client";
 import { CSSProperties, forwardRef, useEffect, useState } from "react";
 import moment, { Moment } from "moment";
-import RippleBase from "../RippleBase/RippleBase";
+import { RippleBase } from "../RippleBase/RippleBase";
 import { Select } from "../Select/Select";
 import {
   _dateButtonSx,

@@ -1,3 +1,4 @@
+"use client";
 import { AccordionButton_ } from "./accordion-button.styled";
 import { AccordionButtonProps } from "./@types";
 import {

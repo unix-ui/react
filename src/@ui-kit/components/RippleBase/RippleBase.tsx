@@ -1,3 +1,4 @@
+"use client";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { useRipple } from "../../hooks";
 import { RippleBase_ } from "./ripple-base.styled";
@@ -33,4 +34,4 @@ const RippleBase = forwardRef<HTMLButtonElement, RippleBaseProps>(
   }
 );
 
-export default RippleBase;
+export { RippleBase };

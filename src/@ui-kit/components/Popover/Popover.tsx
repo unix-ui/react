@@ -1,3 +1,4 @@
+"use client";
 import React, { useCallback } from "react";
 import { TransitionProps } from "../Transition/@types";
 import { Transition } from "../Transition/Transition";
@@ -109,4 +110,4 @@ const Popover = ({ style, elRef, spacing, _ref, ...props }: PopoverProps) => {
   );
 };
 
-export default Popover;
+export { Popover };

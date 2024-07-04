@@ -1,3 +1,4 @@
+"use client";
 import { useClickAway } from "@uidotdev/usehooks";
 import React, { Fragment, useImperativeHandle, useState } from "react";
 import { SelectProps } from "./@types";
@@ -5,7 +6,7 @@ import { safeObj } from "../../../utils/safeObj";
 import { Select_, SelectItem_ } from "./select.styled";
 import { unit } from "../../utils/units";
 import { _defaultSelectProps } from "./_default";
-import Popover from "../Popover/Popover";
+import { Popover } from "../Popover/Popover";
 
 const SelectComp = <T extends unknown[]>(
   _props: SelectProps<T, T[0]>,

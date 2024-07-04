@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Transition } from "../Transition/Transition";
 import { safeCssObj, safeObj } from "../../../utils/safeObj";

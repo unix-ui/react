@@ -1,6 +1,6 @@
 {
   "name": "@unix-ui/react",
-  "version": "1.1.0-pre-alpha",
+  "version": "1.1.2-pre-alpha",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -76,13 +76,21 @@
       "import": "./dist/components/Layouts/index.ts",
       "types": "./dist/components/Layouts/index.d.ts"
     },
+    "./KbdChain": {
+      "import": "./dist/components/KbdChain/index.ts",
+      "types": "./dist/components/KbdChain/index.d.ts"
+    },
+    "./Kbd": {
+      "import": "./dist/components/Kbd/index.ts",
+      "types": "./dist/components/Kbd/index.d.ts"
+    },
     "./Drawer": {
       "import": "./dist/components/Drawer/index.ts",
       "types": "./dist/components/Drawer/index.d.ts"
     },
-    "./Datepickers": {
-      "import": "./dist/components/Datepickers/index.ts",
-      "types": "./dist/components/Datepickers/index.d.ts"
+    "./Datepicker": {
+      "import": "./dist/components/Datepicker/index.ts",
+      "types": "./dist/components/Datepicker/index.d.ts"
     },
     "./Checkbox": {
       "import": "./dist/components/Checkbox/index.ts",
@@ -95,6 +103,10 @@
     "./AvatarGroup": {
       "import": "./dist/components/AvatarGroup/index.ts",
       "types": "./dist/components/AvatarGroup/index.d.ts"
+    },
+    "./AvatarFallback": {
+      "import": "./dist/components/AvatarFallback/index.ts",
+      "types": "./dist/components/AvatarFallback/index.d.ts"
     },
     "./Avatar": {
       "import": "./dist/components/Avatar/index.ts",
